@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
+import '../i18n/strings.g.dart';
 
 void showAddNoteSheet(BuildContext context) {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  final t = Translations.of(context);
 
   showModalBottomSheet(
     context: context,
@@ -24,16 +26,16 @@ void showAddNoteSheet(BuildContext context) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Tạo ghi chú', style: Theme.of(context).textTheme.headlineSmall),
+                Text(t.add_note_sheet.add_note_title, style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: 20),
                 TextField(
                   controller: titleController,
                   decoration: InputDecoration(
-                    labelText: 'Tiêu đề',
-                    hintText: 'Ví dụ: Lên kế hoạch cuối tuần', // THAY ĐỔI: Thêm hintText
+                    labelText: t.add_note_sheet.title_label,
+                    hintText: t.add_note_sheet.title_hint,
                     border: OutlineInputBorder(),
                     errorText: isFormSubmitted && titleController.text.trim().isEmpty
-                        ? 'Tiêu đề không được để trống.'
+                        ? t.add_note_sheet.title_empty_error
                         : null,
                   ),
                 ),
@@ -41,9 +43,9 @@ void showAddNoteSheet(BuildContext context) {
                 TextField(
                   controller: contentController,
                   maxLines: 4,
-                  decoration: const InputDecoration(
-                    labelText: 'Nội dung',
-                    hintText: 'Ví dụ: Đi siêu thị, tập thể dục, đọc sách...', // THAY ĐỔI: Thêm hintText
+                  decoration: InputDecoration(
+                    labelText: t.add_note_sheet.content_label,
+                    hintText: t.add_note_sheet.content_hint, // THAY ĐỔI: Thêm hintText
                     border: OutlineInputBorder(),
                     isDense: true,
                     alignLabelWithHint: true,
@@ -64,7 +66,7 @@ void showAddNoteSheet(BuildContext context) {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text('Lưu ghi chú'),
+                  child: Text(t.add_note_sheet.save_note_button),
                 ),
                 const SizedBox(height: 20),
               ],

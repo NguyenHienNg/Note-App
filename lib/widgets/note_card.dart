@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/note.dart';
 import '../providers/note_provider.dart';
 import '../screens/note_detail_screen.dart';
+import '../i18n/strings.g.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -15,6 +16,7 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ======================== BẮT ĐẦU THAY ĐỔI ========================
+    final t = Translations.of(context);
     return Card(
       // Thêm thuộc tính này để đảm bảo các widget con bị cắt theo góc bo
       clipBehavior: Clip.antiAlias,
@@ -33,7 +35,7 @@ class NoteCard extends StatelessWidget {
           // Bỏ onTap ra khỏi ListTile vì InkWell đã xử lý
           title: Text(note.title, style: Theme.of(context).textTheme.titleMedium),
           subtitle: Text(
-            'Tạo lúc: ${DateFormat.yMd().add_jm().format(note.createdAt)}',
+            t.note_card.created_at.replaceAll('{date}', DateFormat.yMd().add_jm().format(note.createdAt)),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           trailing: IconButton(
@@ -43,20 +45,20 @@ class NoteCard extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: const Text('Xác nhận xóa'),
-                  content: const Text('Bạn có chắc chắn muốn xóa ghi chú này không?'),
+                  title: Text(t.note_card.delete_confirm_title),
+                  content: Text(t.note_card.delete_confirm_content),
                   actions: <Widget>[
                     TextButton(
-                      child: const Text('Hủy'),
+                      child:  Text(t.note_card.cancel_button),
                       onPressed: () => Navigator.of(ctx).pop(),
                     ),
                     FilledButton.tonal(
-                      child: const Text('Xóa'),
+                      child:  Text(t.note_card.delete_button),
                       onPressed: () {
                         Provider.of<NoteProvider>(context, listen: false).deleteNote(note.id);
                         Navigator.of(ctx).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Đã xóa ghi chú!')),
+                        SnackBar(content: Text(t.note_card.note_deleted_snackbar)),
                         );
                       },
                     ),

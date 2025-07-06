@@ -4,9 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'providers/note_provider.dart';
 import 'providers/theme_provider.dart';
 import 'screens/home_screen.dart';
+import 'i18n/strings.g.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    TranslationProvider(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +28,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
           return MaterialApp(
-            title: 'Notes', 
+            title:'Note',
             debugShowCheckedModeBanner: false,
             // Cấu hình Theme Material 3
             themeMode: themeProvider.themeMode,

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
+import '../i18n/strings.g.dart';
 class AboutAppScreen extends StatefulWidget {
   const AboutAppScreen({super.key});
 
@@ -32,9 +32,10 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thông tin'),
+        title: Text(t.about_app_screen.app_bar_title),
       ),
       body: Center(
         child: Column(
@@ -55,7 +56,7 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _appName.isNotEmpty ? _appName : 'Note', // Tên ứng dụng (fallback là 'Note')
+              _appName.isNotEmpty ? _appName : t.about_app_screen.app_name_fallback, // Tên ứng dụng (fallback là 'Note')
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -69,7 +70,7 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              '©2025 NguyenHienNg', // Thông tin bản quyền
+              t.about_app_screen.copyright, // Thông tin bản quyền
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),

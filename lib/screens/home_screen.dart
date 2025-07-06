@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
-// THAY ĐỔI: Đã loại bỏ import '../providers/theme_provider.dart';
 import '../widgets/add_note_sheet.dart';
 import '../widgets/note_card.dart';
 import 'settings.dart';
+import '../i18n/strings.g.dart';
 
 // Chuyển HomeScreen thành StatefulWidget
 class HomeScreen extends StatefulWidget {
@@ -33,10 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
-  }
+}
 
   @override
   Widget build(BuildContext context) {
+    final t = Translations.of(context); // Lấy biến dịch theo context
     // Lấy NoteProvider để có thể lọc ghi chú
     final noteProvider = Provider.of<NoteProvider>(context);
 
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _searchController,
                 autofocus: true, // Tự động focus khi mở tìm kiếm
                 decoration: InputDecoration(
-                  hintText: 'Tìm kiếm ghi chú...',
+                  hintText: t.home_screen.search_hint,
                   border: InputBorder.none, // Bỏ đường viền
                   hintStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
                 ),
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Không cần setState ở đây vì listener đã làm điều đó
                 },
               )
-            : const Text('Ghi chú'),
+            : Text(t.app_name),
         actions: [
           // Nút tìm kiếm / Đóng tìm kiếm
           IconButton(
@@ -98,15 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
           if (noteProvider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           // Sử dụng filteredNotes thay vì noteProvider.notes
           if (filteredNotes.isEmpty) {
             // Hiển thị thông báo khác nhau tùy thuộc vào trạng thái tìm kiếm
             return Center(
               child: Text(
                 _searchText.isEmpty
-                    ? 'Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!'
-                    : 'Không tìm thấy ghi chú nào phù hợp với "$_searchText"',
+                ? t.home_screen.no_notes_empty_state
+                : t.home_screen.no_notes_found_search.replaceAll('{searchText}', _searchText),
               ),
             );
           }
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showAddNoteSheet(context),
-        label: const Text('Tạo ghi chú'),
+        label: Text(t.home_screen.create_note_button),
         icon: const Icon(Icons.add),
       ),
     );

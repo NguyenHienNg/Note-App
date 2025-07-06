@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../providers/theme_provider.dart';
 import 'about_app_screen.dart';
+import '../i18n/strings.g.dart';
 
 // Chuyển SettingsScreen thành StatefulWidget để quản lý trạng thái ngôn ngữ
 class SettingsScreen extends StatefulWidget {
@@ -16,9 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final Uri _githubUrl = Uri.parse('https://github.com/NguyenHienNg/My-App');
 
   // Biến trạng thái cục bộ để theo dõi ngôn ngữ được chọn
-  // Mặc định là 'vi' (Tiếng Việt)
-  String _selectedLanguageCode = 'vi'; // Có thể lưu vào SharedPreferences sau
-
+  String _selectedLanguageCode = "en";
   @override
   void initState() {
     super.initState();
@@ -40,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!await launchUrl(url)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Không thể mở liên kết: $url'),
+          content: Text('Cannot open link: $url'),
           backgroundColor: Colors.red,
         ),
       );
@@ -58,12 +57,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Chọn Ngôn ngữ',
+                t.settings_screen.language_selection_sheet_title,
                 style: Theme.of(ctx).textTheme.headlineSmall,
               ),
             ),
             RadioListTile<String>(
-              title: const Text('Tiếng Việt'),
+              title: Text(t.settings_screen.language_vietnamese),
               value: 'vi',
               groupValue: _selectedLanguageCode,
               onChanged: (String? value) {
@@ -71,6 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   setState(() {
                     _selectedLanguageCode = value;
                   });
+                  LocaleSettings.setLocale(AppLocale.vi); // đổi ngôn ngữ runtime
                   // Trong thực tế, bạn sẽ lưu ngôn ngữ đã chọn vào SharedPreferences ở đây
                   // Và sau đó thông báo cho MaterialApp để thay đổi Locale.
                   Navigator.pop(ctx);
@@ -78,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             RadioListTile<String>(
-              title: const Text('English'),
+              title: Text(t.settings_screen.language_english),
               value: 'en',
               groupValue: _selectedLanguageCode,
               onChanged: (String? value) {
@@ -86,6 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   setState(() {
                     _selectedLanguageCode = value;
                   });
+                  LocaleSettings.setLocale(AppLocale.en); // đổi ngôn ngữ runtime
                   // Lưu và thông báo MaterialApp
                   Navigator.pop(ctx);
                 }
@@ -103,11 +104,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String _getLanguageName(String code) {
     switch (code) {
       case 'vi':
-        return 'Tiếng Việt';
+        return t.settings_screen.language_vietnamese;
       case 'en':
-        return 'English';
+        return t.settings_screen.language_english;
       default:
-        return 'Không xác định';
+        return t.settings_screen.unknown;
     }
   }
 
@@ -164,12 +165,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Chọn Chủ đề',
+                t.settings_screen.theme_selection_sheet_title,
                 style: Theme.of(ctx).textTheme.headlineSmall,
               ),
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Hệ thống'),
+              title: Text(t.settings_screen.theme_system),
               value: ThemeMode.system,
               groupValue: themeProvider.themeMode,
               onChanged: (ThemeMode? value) {
@@ -180,7 +181,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Sáng'),
+              title: Text(t.settings_screen.theme_light),
               value: ThemeMode.light,
               groupValue: themeProvider.themeMode,
               onChanged: (ThemeMode? value) {
@@ -191,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Tối'),
+              title: Text(t.settings_screen.theme_dark),
               value: ThemeMode.dark,
               groupValue: themeProvider.themeMode,
               onChanged: (ThemeMode? value) {
@@ -211,11 +212,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String _getThemeModeName(ThemeMode mode) {
     switch (mode) {
       case ThemeMode.system:
-        return 'Mặc định hệ thống';
+        return t.settings_screen.theme_system;
       case ThemeMode.light:
-        return 'Sáng';
+        return t.settings_screen.theme_light;
       case ThemeMode.dark:
-        return 'Tối';
+        return t.settings_screen.theme_dark;
     }
   }
 
@@ -225,54 +226,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cài đặt'),
+        title: Text(t.settings_screen.app_bar_title),
       ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
           children: [
             const SizedBox(height: 16.0),
-            _buildSectionHeader(context, 'Cài đặt'),
+            _buildSectionHeader(context, t.settings_screen.section_settings),
             const SizedBox(height: 8.0),
             _buildSettingsItem(
               context,
-              title: 'Chủ đề',
+              title: t.settings_screen.theme_title,
               subtitle: _getThemeModeName(themeProvider.themeMode),
               onTap: () => _showThemeSelectionSheet(context, themeProvider),
             ),
             // THÊM MỤC NGÔN NGỮ MỚI
             _buildSettingsItem(
               context,
-              title: 'Ngôn ngữ',
+              title: t.settings_screen.language_title,
               subtitle: _getLanguageName(_selectedLanguageCode), // Hiển thị ngôn ngữ đang chọn
               onTap: () => _showLanguageSelectionSheet(context), // Mở sheet chọn ngôn ngữ
             ),
             const Divider(height: 0, thickness: 1), // Đường kẻ phân cách giữa các nhóm
             const SizedBox(height: 16.0),
 
-            _buildSectionHeader(context, 'About'),
+            _buildSectionHeader(context, t.settings_screen.section_about),
             const SizedBox(height: 8.0),
             _buildSettingsItem(
               context,
-              title: 'Xem mã nguồn',
-              subtitle: 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.',
+              title: t.settings_screen.view_source_title,
+              subtitle: t.settings_screen.view_source_subtitle,
               onTap: () => _launchUrl(_githubUrl, context),
             ),
             _buildSettingsItem(
               context,
-              title: 'Giúp chúng tôi dịch!',
-              subtitle: 'Nếu bạn thích Trình chạy hoạt động, bạn nên cân nhắc dịch ứng dụng này cho ngôn ngữ của bạn.',
+              title: t.settings_screen.help_translate_title,
+              subtitle: t.settings_screen.help_translate_subtitle,
               onTap: () => _launchUrl(_githubUrl, context),
             ),
             _buildSettingsItem(
               context,
-              title: 'Báo cáo lỗi',
-              subtitle: 'Nếu bạn có bất kỳ gợi ý hay vấn đề nào, vui lòng báo cáo chúng vào dự án của chúng tôi tại GitHub.',
+              title: t.settings_screen.report_bug_title,
+              subtitle: t.settings_screen.report_bug_subtitle,
               onTap: () => _launchUrl(_githubUrl, context),
             ),
             _buildSettingsItem(
               context,
-              title: 'Về ứng dụng',
+              title: t.settings_screen.about_app_title,
               onTap: () {
                 Navigator.push(
                   context,

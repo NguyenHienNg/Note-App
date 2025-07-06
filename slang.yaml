@@ -1,0 +1,4 @@
+input_directory: assets/i18n
+output_directory: lib/i18n
+fallback_locale: en
+base_locale: en

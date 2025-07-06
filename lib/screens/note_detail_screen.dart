@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../models/note.dart';
 import '../providers/note_provider.dart';
-
+import '../i18n/strings.g.dart';
 class NoteDetailScreen extends StatefulWidget {
   final Note note;
 
@@ -73,7 +73,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   Future<bool> _saveChangesLogic() async {
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
-
+    final t = Translations.of(context);
     if (_titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -81,8 +81,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
             children: [
               const Icon(Icons.error_outline, color: Colors.white),
               const SizedBox(width: 8),
-              const Text(
-                'Tiêu đề không được để trống!',
+              Text(
+                t.note_detail_screen.title_empty_error_snackbar,
                 style: TextStyle(color: Colors.white),
               ),
             ],
@@ -103,7 +103,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Đã lưu thay đổi!',
+          t.note_detail_screen.changes_saved_snackbar,
           style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
         ),
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -133,8 +133,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              title: const Text('Nhắc nhở'),
-              content: const Text('Bạn chắc chắn muốn lưu thay đổi này không?'),
+              title: Text(t.note_detail_screen.dialog_title),
+              content: Text(t.note_detail_screen.dialog_content_save_confirm),
               actions: <Widget>[
                 TextButton(
                   onPressed: dialogIsSaving
@@ -142,7 +142,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                       : () {
                           Navigator.of(dialogContext).pop(false);
                         },
-                  child: const Text('Hủy'),
+                  child: Text(t.note_detail_screen.dialog_cancel_button),
                 ),
                 FilledButton.tonal(
                   onPressed: dialogIsSaving
@@ -151,7 +151,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                           _discardChanges();
                           Navigator.of(dialogContext).pop(true);
                         },
-                  child: const Text('Không lưu'),
+                  child: Text(t.note_detail_screen.dialog_discard_button),
                 ),
                 ElevatedButton(
                   onPressed: dialogIsSaving
@@ -182,7 +182,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                           height: 20,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('OK'),
+                      : Text(t.note_detail_screen.dialog_ok_button),
                 ),
               ],
             );
@@ -201,8 +201,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           return StatefulBuilder(
             builder: (context, setStateDialog) {
               return AlertDialog(
-                title: const Text('Nhắc nhở'),
-                content: const Text('Bạn có chắc muốn lưu thay đổi này không?'),
+                title: Text(t.note_detail_screen.dialog_title),
+                content: Text(t.note_detail_screen.dialog_content_exit_confirm),
                 actions: <Widget>[
                   TextButton(
                     onPressed: dialogIsSaving
@@ -210,7 +210,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                         : () {
                             Navigator.of(dialogContext).pop(false);
                           },
-                    child: const Text('Hủy'),
+                    child: Text(t.note_detail_screen.dialog_cancel_button),
                   ),
                   FilledButton.tonal(
                     onPressed: dialogIsSaving
@@ -219,7 +219,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             _discardChanges();
                             Navigator.of(dialogContext).pop(true);
                           },
-                    child: const Text('Không lưu'),
+                    child: Text(t.note_detail_screen.dialog_discard_button),
                   ),
                   ElevatedButton(
                     onPressed: dialogIsSaving
@@ -250,7 +250,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             height: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('OK'),
+                        : Text(t.note_detail_screen.dialog_ok_button),
                   ),
                 ],
               );
@@ -298,7 +298,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               }
             },
           ),
-          title: _isEditing ? const Text('Chỉnh sửa ghi chú') : const Text(''),
+          title: _isEditing ? Text(t.note_detail_screen.edit_note_title) : const Text(''),
           actions: [
             IconButton(
               icon: _isEditing
@@ -341,9 +341,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             style: textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
-                            decoration: const InputDecoration(
-                              labelText: 'Tiêu đề',
-                              hintText: 'Nhập tiêu đề ghi chú...',
+                            decoration: InputDecoration(
+                              labelText: t.note_detail_screen.title_label,
+                              hintText: t.note_detail_screen.title_hint,
                               border: OutlineInputBorder(),
                               isDense: true,
                               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -362,12 +362,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                     const SizedBox(height: 8),
                     if (!_isEditing)
                       Text(
-                        'Tạo lúc: ${DateFormat.yMMMMEEEEd().add_jm().format(currentNote.createdAt)}',
+                        t.note_card.created_at.replaceAll('{date}', DateFormat.yMMMMEEEEd().add_jm().format(currentNote.createdAt)),
                         style: textTheme.bodySmall,
                       ),
                     const Divider(height: 32, thickness: 1.0),
                     Text(
-                      'Nội dung:',
+                      t.note_detail_screen.content_label,
                       style: textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -379,9 +379,9 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             style: textTheme.bodyLarge?.copyWith(
                               height: 1.5,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: 'Nhập nội dung ghi chú...',
+                              hintText: t.note_detail_screen.content_label,
                             ),
                             maxLines: null,
                             minLines: 8,
@@ -393,7 +393,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                                   const SizedBox(height: 200.0), // THAY ĐỔI: Tăng khoảng trống lên 100px
                                   Center(
                                     child: Text(
-                                      'Chẳng có gì ¯\\_(ツ)_/¯',
+                                      t.note_detail_screen.no_content_placeholder,
                                       style: textTheme.bodyLarge?.copyWith(
                                         color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                                       ),

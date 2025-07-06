@@ -1,0 +1,72 @@
+{
+  "app_name": "Ghi chú",
+  "home_screen": {
+    "app_bar_title": "Ghi chú",
+    "search_hint": "Tìm kiếm ghi chú...",
+    "no_notes_empty_state": "Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!",
+    "no_notes_found_search": "Không tìm thấy ghi chú nào phù hợp với \"{searchText}\"",
+    "create_note_button": "Tạo ghi chú"
+  },
+  "note_card": {
+    "created_at": "Tạo lúc: {date}",
+    "delete_confirm_title": "Xác nhận xóa",
+    "delete_confirm_content": "Bạn có chắc chắn muốn xóa ghi chú này không?",
+    "cancel_button": "Hủy",
+    "delete_button": "Xóa",
+    "note_deleted_snackbar": "Đã xóa ghi chú!"
+  },
+  "add_note_sheet": {
+    "add_note_title": "Tạo ghi chú",
+    "title_label": "Tiêu đề",
+    "title_hint": "Ví dụ: Lên kế hoạch cuối tuần",
+    "content_label": "Nội dung",
+    "content_hint": "Ví dụ: Đi siêu thị, tập thể dục, đọc sách...",
+    "save_note_button": "Lưu ghi chú",
+    "title_empty_error": "Tiêu đề không được để trống."
+  },
+  "note_detail_screen": {
+    "edit_note_title": "Chỉnh sửa ghi chú",
+    "title_label": "Tiêu đề",
+    "title_hint": "Nhập tiêu đề ghi chú...",
+    "content_label": "Nội dung:",
+    "content_hint": "Nhập nội dung ghi chú...",
+    "created_at": "Tạo lúc: {date}",
+    "no_content_placeholder": "Chẳng có gì ¯\\_(ツ)_/¯",
+    "title_empty_error_snackbar": "Tiêu đề không được để trống!",
+    "changes_saved_snackbar": "Đã lưu thay đổi!",
+    "dialog_title": "Nhắc nhở",
+    "dialog_content_save_confirm": "Bạn chắc chắn muốn lưu thay đổi này không?",
+    "dialog_content_exit_confirm": "Bạn có chắc muốn lưu thay đổi này không?",
+    "dialog_cancel_button": "Hủy",
+    "dialog_discard_button": "Không lưu",
+    "dialog_ok_button": "OK"
+  },
+  "settings_screen": {
+    "app_bar_title": "Cài đặt",
+    "section_settings": "Cài đặt",
+    "theme_title": "Chủ đề",
+    "theme_system": "Mặc định hệ thống",
+    "theme_light": "Sáng",
+    "theme_dark": "Tối",
+    "theme_selection_sheet_title": "Chọn Chủ đề",
+    "language_title": "Ngôn ngữ",
+    "language_selection_sheet_title": "Chọn Ngôn ngữ",
+    "language_vietnamese": "Tiếng Việt",
+    "language_english": "English",
+    "section_about": "About",
+    "view_source_title": "Xem mã nguồn",
+    "view_source_subtitle": "Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.",
+    "help_translate_title": "Giúp chúng tôi dịch!",
+    "help_translate_subtitle": "Nếu bạn thích ứng dụng này, bạn nên cân nhắc dịch ứng dụng này cho ngôn ngữ của bạn.",
+    "report_bug_title": "Báo cáo lỗi",
+    "report_bug_subtitle": "Nếu bạn có bất kỳ gợi ý hay vấn đề nào, vui lòng báo cáo chúng vào dự án của chúng tôi tại GitHub.",
+    "about_app_title": "Về ứng dụng",
+    "url_launch_error": "Không thể mở liên kết: {url}",
+    "unknown": "Không xác định"
+  },
+  "about_app_screen": {
+    "app_bar_title": "Thông tin",
+    "app_name_fallback": "Note",
+    "copyright": "©2025 NguyenHienNg"
+  }
+}
