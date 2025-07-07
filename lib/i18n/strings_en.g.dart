@@ -106,7 +106,7 @@ class TranslationsNoteDetailScreenEn {
 	String get content_label => 'Content:';
 	String get content_hint => 'Enter note content...';
 	String get created_at => 'Created at: {date}';
-	String get no_content_placeholder => 'Nothing here ¯\_(ツ)_/¯';
+	String get no_content_placeholder => 'Nothing here ¯\⁠⁠\\_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 	String get title_empty_error_snackbar => 'Title cannot be empty!';
 	String get changes_saved_snackbar => 'Changes saved!';
 	String get dialog_title => 'Reminder';
@@ -189,7 +189,7 @@ extension on Translations {
 			case 'note_detail_screen.content_label': return 'Content:';
 			case 'note_detail_screen.content_hint': return 'Enter note content...';
 			case 'note_detail_screen.created_at': return 'Created at: {date}';
-			case 'note_detail_screen.no_content_placeholder': return 'Nothing here ¯\_(ツ)_/¯';
+			case 'note_detail_screen.no_content_placeholder': return 'Nothing here ¯\\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 			case 'note_detail_screen.title_empty_error_snackbar': return 'Title cannot be empty!';
 			case 'note_detail_screen.changes_saved_snackbar': return 'Changes saved!';
 			case 'note_detail_screen.dialog_title': return 'Reminder';

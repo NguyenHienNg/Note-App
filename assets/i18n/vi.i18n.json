@@ -31,7 +31,7 @@
     "content_label": "Nội dung:",
     "content_hint": "Nhập nội dung ghi chú...",
     "created_at": "Tạo lúc: {date}",
-    "no_content_placeholder": "Chẳng có gì ¯\\_(ツ)_/¯",
+    "no_content_placeholder": "Chẳng có gì ¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯",
     "title_empty_error_snackbar": "Tiêu đề không được để trống!",
     "changes_saved_snackbar": "Đã lưu thay đổi!",
     "dialog_title": "Nhắc nhở",

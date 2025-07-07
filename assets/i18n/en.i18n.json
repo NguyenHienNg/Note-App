@@ -31,7 +31,7 @@
     "content_label": "Content:",
     "content_hint": "Enter note content...",
     "created_at": "Created at: {date}",
-    "no_content_placeholder": "Nothing here ¯\\_(ツ)_/¯",
+    "no_content_placeholder": "Nothing here ¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯",
     "title_empty_error_snackbar": "Title cannot be empty!",
     "changes_saved_snackbar": "Changes saved!",
     "dialog_title": "Reminder",

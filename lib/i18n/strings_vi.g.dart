@@ -103,7 +103,7 @@ class _TranslationsNoteDetailScreenVi implements TranslationsNoteDetailScreenEn 
 	@override String get content_label => 'Nội dung:';
 	@override String get content_hint => 'Nhập nội dung ghi chú...';
 	@override String get created_at => 'Tạo lúc: {date}';
-	@override String get no_content_placeholder => 'Chẳng có gì ¯\_(ツ)_/¯';
+	@override String get no_content_placeholder => 'Chẳng có gì ¯\\\⁠⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 	@override String get title_empty_error_snackbar => 'Tiêu đề không được để trống!';
 	@override String get changes_saved_snackbar => 'Đã lưu thay đổi!';
 	@override String get dialog_title => 'Nhắc nhở';
@@ -186,7 +186,7 @@ extension on TranslationsVi {
 			case 'note_detail_screen.content_label': return 'Nội dung:';
 			case 'note_detail_screen.content_hint': return 'Nhập nội dung ghi chú...';
 			case 'note_detail_screen.created_at': return 'Tạo lúc: {date}';
-			case 'note_detail_screen.no_content_placeholder': return 'Chẳng có gì ¯\_(ツ)_/¯';
+			case 'note_detail_screen.no_content_placeholder': return 'Chẳng có gì ¯⁠\\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 			case 'note_detail_screen.title_empty_error_snackbar': return 'Tiêu đề không được để trống!';
 			case 'note_detail_screen.changes_saved_snackbar': return 'Đã lưu thay đổi!';
 			case 'note_detail_screen.dialog_title': return 'Nhắc nhở';

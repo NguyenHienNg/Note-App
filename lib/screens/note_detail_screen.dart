@@ -381,7 +381,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                             ),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: t.note_detail_screen.content_label,
+                              hintText: t.note_detail_screen.content_hint,
                             ),
                             maxLines: null,
                             minLines: 8,
