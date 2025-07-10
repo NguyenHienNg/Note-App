@@ -1,5 +1,7 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../providers/theme_provider.dart';
 import 'about_app_screen.dart';
@@ -15,24 +17,41 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final Uri _githubUrl = Uri.parse('https://github.com/NguyenHienNg/My-App');
+  // Giá trị ngôn ngữ được chọn: có thể là "en", "vi", hoặc "sys" (mặc định hệ thống)
+  String _selectedLanguageCode = "sys";
 
-  // Biến trạng thái cục bộ để theo dõi ngôn ngữ được chọn
-  String _selectedLanguageCode = "en";
   @override
   void initState() {
     super.initState();
-    // Trong thực tế, bạn sẽ tải ngôn ngữ đã lưu từ SharedPreferences ở đây
     _loadSelectedLanguage();
   }
 
-  // Hàm giả lập tải ngôn ngữ đã chọn
-  void _loadSelectedLanguage() {
-    // Đây là nơi bạn sẽ đọc từ SharedPreferences hoặc một nơi lưu trữ khác
-    // Ví dụ: final prefs = await SharedPreferences.getInstance();
-    // String? savedLang = prefs.getString('app_language');
+  // Hàm tải ngôn ngữ đã chọn từ SharedPreferences
+  void _loadSelectedLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedLang = prefs.getString('app_language');
     setState(() {
-      // _selectedLanguageCode = savedLang ?? 'vi';
+      _selectedLanguageCode = savedLang ?? 'sys';
     });
+    // Nếu lưu là hệ thống, lấy ngôn ngữ của hệ thống
+    if (_selectedLanguageCode == 'sys') {
+      String deviceLang = window.locale.languageCode;
+      if (deviceLang != 'vi' && deviceLang != 'en') {
+        deviceLang = 'en';
+      }
+      if (deviceLang == 'vi') {
+        LocaleSettings.setLocale(AppLocale.vi);
+      } else {
+        LocaleSettings.setLocale(AppLocale.en);
+      }
+    } else {
+      // Nếu lưu là "vi" hoặc "en"
+      if (_selectedLanguageCode == 'vi') {
+        LocaleSettings.setLocale(AppLocale.vi);
+      } else {
+        LocaleSettings.setLocale(AppLocale.en);
+      }
+    }
   }
 
   Future<void> _launchUrl(Uri url, BuildContext context) async {
@@ -62,17 +81,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             RadioListTile<String>(
-              title: Text(t.settings_screen.language_vietnamese),
-              value: 'vi',
+              title: Text(t.settings_screen.language_system), // Bạn cần đảm bảo đã thêm chuỗi này vào strings.g.dart
+              value: 'sys',
               groupValue: _selectedLanguageCode,
-              onChanged: (String? value) {
+              onChanged: (String? value) async {
                 if (value != null) {
                   setState(() {
                     _selectedLanguageCode = value;
                   });
-                  LocaleSettings.setLocale(AppLocale.vi); // đổi ngôn ngữ runtime
-                  // Trong thực tế, bạn sẽ lưu ngôn ngữ đã chọn vào SharedPreferences ở đây
-                  // Và sau đó thông báo cho MaterialApp để thay đổi Locale.
+                  // Lấy ngôn ngữ của hệ thống
+                  String deviceLang = window.locale.languageCode;
+                  if (deviceLang != 'vi' && deviceLang != 'en') {
+                    deviceLang = 'en';
+                  }
+                  if (deviceLang == 'vi') {
+                    LocaleSettings.setLocale(AppLocale.vi);
+                  } else {
+                    LocaleSettings.setLocale(AppLocale.en);
+                  }
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setString('app_language', value);
+                  Navigator.pop(ctx);
+                }
+              },
+            ),
+            RadioListTile<String>(
+              title: Text(t.settings_screen.language_vietnamese),
+              value: 'vi',
+              groupValue: _selectedLanguageCode,
+              onChanged: (String? value) async {
+                if (value != null) {
+                  setState(() {
+                    _selectedLanguageCode = value;
+                  });
+                  LocaleSettings.setLocale(AppLocale.vi);
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setString('app_language', value);
                   Navigator.pop(ctx);
                 }
               },
@@ -81,18 +125,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: Text(t.settings_screen.language_english),
               value: 'en',
               groupValue: _selectedLanguageCode,
-              onChanged: (String? value) {
+              onChanged: (String? value) async {
                 if (value != null) {
                   setState(() {
                     _selectedLanguageCode = value;
                   });
-                  LocaleSettings.setLocale(AppLocale.en); // đổi ngôn ngữ runtime
-                  // Lưu và thông báo MaterialApp
+                  LocaleSettings.setLocale(AppLocale.en);
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setString('app_language', value);
                   Navigator.pop(ctx);
                 }
               },
             ),
-            // Bạn có thể thêm các ngôn ngữ khác ở đây
             const SizedBox(height: 20),
           ],
         );
@@ -100,9 +144,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  // Hàm helper để lấy tên ngôn ngữ hiển thị
+  // Hàm helper để lấy tên hiển thị ngôn ngữ dựa trên code
   String _getLanguageName(String code) {
     switch (code) {
+      case 'sys':
+        return t.settings_screen.language_system;
       case 'vi':
         return t.settings_screen.language_vietnamese;
       case 'en':
@@ -133,7 +179,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     VoidCallback? onTap,
   }) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       title: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium,
@@ -143,10 +190,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.only(top: 4.0),
               child: Text(
                 subtitle,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.normal,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.normal,
+                    ),
               ),
             )
           : null,
@@ -155,7 +205,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void _showThemeSelectionSheet(BuildContext context, ThemeProvider themeProvider) {
+  void _showThemeSelectionSheet(
+      BuildContext context, ThemeProvider themeProvider) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -230,29 +281,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+          padding:
+              const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
           children: [
+            const SizedBox(height: 14.0),
+            _buildSectionHeader(context, t.settings_screen.section_appearance),
             const SizedBox(height: 16.0),
-            _buildSectionHeader(context, t.settings_screen.section_settings),
-            const SizedBox(height: 8.0),
             _buildSettingsItem(
               context,
               title: t.settings_screen.theme_title,
               subtitle: _getThemeModeName(themeProvider.themeMode),
               onTap: () => _showThemeSelectionSheet(context, themeProvider),
             ),
-            // THÊM MỤC NGÔN NGỮ MỚI
             _buildSettingsItem(
               context,
               title: t.settings_screen.language_title,
-              subtitle: _getLanguageName(_selectedLanguageCode), // Hiển thị ngôn ngữ đang chọn
-              onTap: () => _showLanguageSelectionSheet(context), // Mở sheet chọn ngôn ngữ
+              subtitle: _getLanguageName(_selectedLanguageCode),
+              onTap: () => _showLanguageSelectionSheet(context),
             ),
-            const Divider(height: 0, thickness: 1), // Đường kẻ phân cách giữa các nhóm
-            const SizedBox(height: 16.0),
-
+            const Divider(height: 0, thickness: 1.5),
+            const SizedBox(height: 22.0),
             _buildSectionHeader(context, t.settings_screen.section_about),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 16.0),
             _buildSettingsItem(
               context,
               title: t.settings_screen.view_source_title,
@@ -277,11 +327,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AboutAppScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const AboutAppScreen()),
                 );
               },
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 0),
           ],
         ),
       ),

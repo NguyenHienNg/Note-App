@@ -103,7 +103,7 @@ class _TranslationsNoteDetailScreenVi implements TranslationsNoteDetailScreenEn 
 	@override String get content_label => 'Nội dung:';
 	@override String get content_hint => 'Nhập nội dung ghi chú...';
 	@override String get created_at => 'Tạo lúc: {date}';
-	@override String get no_content_placeholder => 'Chẳng có gì ¯\\\⁠⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
+	@override String get no_content_placeholder => 'Chẳng có gì ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 	@override String get title_empty_error_snackbar => 'Tiêu đề không được để trống!';
 	@override String get changes_saved_snackbar => 'Đã lưu thay đổi!';
 	@override String get dialog_title => 'Nhắc nhở';
@@ -122,7 +122,7 @@ class _TranslationsSettingsScreenVi implements TranslationsSettingsScreenEn {
 
 	// Translations
 	@override String get app_bar_title => 'Cài đặt';
-	@override String get section_settings => 'Cài đặt';
+	@override String get section_appearance => 'Giao diện';
 	@override String get theme_title => 'Chủ đề';
 	@override String get theme_system => 'Mặc định hệ thống';
 	@override String get theme_light => 'Sáng';
@@ -130,9 +130,10 @@ class _TranslationsSettingsScreenVi implements TranslationsSettingsScreenEn {
 	@override String get theme_selection_sheet_title => 'Chọn Chủ đề';
 	@override String get language_title => 'Ngôn ngữ';
 	@override String get language_selection_sheet_title => 'Chọn Ngôn ngữ';
-	@override String get language_vietnamese => 'Tiếng Việt';
-	@override String get language_english => 'English';
-	@override String get section_about => 'About';
+	@override String get language_system => 'Mặc định hệ thống';
+	@override String get language_vietnamese => 'Tiếng Việt (Vietnamese)';
+	@override String get language_english => 'English (US)';
+	@override String get section_about => 'Thông tin';
 	@override String get view_source_title => 'Xem mã nguồn';
 	@override String get view_source_subtitle => 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';
 	@override String get help_translate_title => 'Giúp chúng tôi dịch!';
@@ -151,8 +152,8 @@ class _TranslationsAboutAppScreenVi implements TranslationsAboutAppScreenEn {
 	final TranslationsVi _root; // ignore: unused_field
 
 	// Translations
-	@override String get app_bar_title => 'Thông tin';
-	@override String get app_name_fallback => 'Note';
+	@override String get app_bar_title => 'Về ứng dụng';
+	@override String get app_name_fallback => 'Notes (Ghi chú)';
 	@override String get copyright => '©2025 NguyenHienNg';
 }
 
@@ -186,7 +187,7 @@ extension on TranslationsVi {
 			case 'note_detail_screen.content_label': return 'Nội dung:';
 			case 'note_detail_screen.content_hint': return 'Nhập nội dung ghi chú...';
 			case 'note_detail_screen.created_at': return 'Tạo lúc: {date}';
-			case 'note_detail_screen.no_content_placeholder': return 'Chẳng có gì ¯⁠\\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
+			case 'note_detail_screen.no_content_placeholder': return 'Chẳng có gì ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 			case 'note_detail_screen.title_empty_error_snackbar': return 'Tiêu đề không được để trống!';
 			case 'note_detail_screen.changes_saved_snackbar': return 'Đã lưu thay đổi!';
 			case 'note_detail_screen.dialog_title': return 'Nhắc nhở';
@@ -196,7 +197,7 @@ extension on TranslationsVi {
 			case 'note_detail_screen.dialog_discard_button': return 'Không lưu';
 			case 'note_detail_screen.dialog_ok_button': return 'OK';
 			case 'settings_screen.app_bar_title': return 'Cài đặt';
-			case 'settings_screen.section_settings': return 'Cài đặt';
+			case 'settings_screen.section_appearance': return 'Giao diện';
 			case 'settings_screen.theme_title': return 'Chủ đề';
 			case 'settings_screen.theme_system': return 'Mặc định hệ thống';
 			case 'settings_screen.theme_light': return 'Sáng';
@@ -204,9 +205,10 @@ extension on TranslationsVi {
 			case 'settings_screen.theme_selection_sheet_title': return 'Chọn Chủ đề';
 			case 'settings_screen.language_title': return 'Ngôn ngữ';
 			case 'settings_screen.language_selection_sheet_title': return 'Chọn Ngôn ngữ';
-			case 'settings_screen.language_vietnamese': return 'Tiếng Việt';
-			case 'settings_screen.language_english': return 'English';
-			case 'settings_screen.section_about': return 'About';
+			case 'settings_screen.language_system': return 'Mặc định hệ thống';
+			case 'settings_screen.language_vietnamese': return 'Tiếng Việt (Vietnamese)';
+			case 'settings_screen.language_english': return 'English (US)';
+			case 'settings_screen.section_about': return 'Thông tin';
 			case 'settings_screen.view_source_title': return 'Xem mã nguồn';
 			case 'settings_screen.view_source_subtitle': return 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';
 			case 'settings_screen.help_translate_title': return 'Giúp chúng tôi dịch!';
@@ -216,8 +218,8 @@ extension on TranslationsVi {
 			case 'settings_screen.about_app_title': return 'Về ứng dụng';
 			case 'settings_screen.url_launch_error': return 'Không thể mở liên kết: {url}';
 			case 'settings_screen.unknown': return 'Không xác định';
-			case 'about_app_screen.app_bar_title': return 'Thông tin';
-			case 'about_app_screen.app_name_fallback': return 'Note';
+			case 'about_app_screen.app_bar_title': return 'Về ứng dụng';
+			case 'about_app_screen.app_name_fallback': return 'Notes (Ghi chú)';
 			case 'about_app_screen.copyright': return '©2025 NguyenHienNg';
 			default: return null;
 		}

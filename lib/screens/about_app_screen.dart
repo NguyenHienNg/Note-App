@@ -11,7 +11,6 @@ class AboutAppScreen extends StatefulWidget {
 }
 
 class _AboutAppScreenState extends State<AboutAppScreen> {
-  String _appName = '';
   String _version = '';
   String _buildNumber = '';
 
@@ -24,7 +23,6 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
   Future<void> _initPackageInfo() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
-      _appName = packageInfo.appName;
       _version = packageInfo.version;
       _buildNumber = packageInfo.buildNumber;
     });
@@ -56,7 +54,7 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _appName.isNotEmpty ? _appName : t.about_app_screen.app_name_fallback, // Tên ứng dụng (fallback là 'Note')
+                t.about_app_screen.app_name_fallback, // Tên ứng dụng (fallback là 'Note')
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

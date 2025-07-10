@@ -43,7 +43,7 @@
   },
   "settings_screen": {
     "app_bar_title": "Settings",
-    "section_settings": "Settings",
+    "section_appearance": "Appearance",
     "theme_title": "Theme",
     "theme_system": "System Default",
     "theme_light": "Light",
@@ -51,8 +51,9 @@
     "theme_selection_sheet_title": "Select Theme",
     "language_title": "Language",
     "language_selection_sheet_title": "Select Language",
-    "language_vietnamese": "Tiếng Việt",
-    "language_english": "English",
+    "language_system": "System Default",
+    "language_vietnamese": "Tiếng Việt (Vietnamese)",
+    "language_english": "English (US)",
     "section_about": "About",
     "view_source_title": "View Source Code",
     "view_source_subtitle": "The source code for this application is available for reading on GitHub. You can also send us your improvement and bug fix requests.",
@@ -65,8 +66,8 @@
     "unknown": "unknown"
   },
   "about_app_screen": {
-    "app_bar_title": "Information",
-    "app_name_fallback": "Note",
+    "app_bar_title": "About App",
+    "app_name_fallback": "Notes",
     "copyright": "©2025 NguyenHienNg"
   }
 }

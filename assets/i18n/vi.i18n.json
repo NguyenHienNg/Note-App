@@ -43,7 +43,7 @@
   },
   "settings_screen": {
     "app_bar_title": "Cài đặt",
-    "section_settings": "Cài đặt",
+    "section_appearance": "Giao diện",
     "theme_title": "Chủ đề",
     "theme_system": "Mặc định hệ thống",
     "theme_light": "Sáng",
@@ -51,9 +51,10 @@
     "theme_selection_sheet_title": "Chọn Chủ đề",
     "language_title": "Ngôn ngữ",
     "language_selection_sheet_title": "Chọn Ngôn ngữ",
-    "language_vietnamese": "Tiếng Việt",
-    "language_english": "English",
-    "section_about": "About",
+    "language_system": "Mặc định hệ thống",
+    "language_vietnamese": "Tiếng Việt (Vietnamese)",
+    "language_english": "English (US)",
+    "section_about": "Thông tin",
     "view_source_title": "Xem mã nguồn",
     "view_source_subtitle": "Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.",
     "help_translate_title": "Giúp chúng tôi dịch!",
@@ -65,8 +66,8 @@
     "unknown": "Không xác định"
   },
   "about_app_screen": {
-    "app_bar_title": "Thông tin",
-    "app_name_fallback": "Note",
+    "app_bar_title": "Về ứng dụng",
+    "app_name_fallback": "Notes (Ghi chú)",
     "copyright": "©2025 NguyenHienNg"
   }
 }

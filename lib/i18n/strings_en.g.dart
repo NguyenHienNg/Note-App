@@ -106,7 +106,7 @@ class TranslationsNoteDetailScreenEn {
 	String get content_label => 'Content:';
 	String get content_hint => 'Enter note content...';
 	String get created_at => 'Created at: {date}';
-	String get no_content_placeholder => 'Nothing here ¯\⁠⁠\\_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
+	String get no_content_placeholder => 'Nothing here ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 	String get title_empty_error_snackbar => 'Title cannot be empty!';
 	String get changes_saved_snackbar => 'Changes saved!';
 	String get dialog_title => 'Reminder';
@@ -125,7 +125,7 @@ class TranslationsSettingsScreenEn {
 
 	// Translations
 	String get app_bar_title => 'Settings';
-	String get section_settings => 'Settings';
+	String get section_appearance => 'Appearance';
 	String get theme_title => 'Theme';
 	String get theme_system => 'System Default';
 	String get theme_light => 'Light';
@@ -133,8 +133,9 @@ class TranslationsSettingsScreenEn {
 	String get theme_selection_sheet_title => 'Select Theme';
 	String get language_title => 'Language';
 	String get language_selection_sheet_title => 'Select Language';
-	String get language_vietnamese => 'Tiếng Việt';
-	String get language_english => 'English';
+	String get language_system => 'System Default';
+	String get language_vietnamese => 'Tiếng Việt (Vietnamese)';
+	String get language_english => 'English (US)';
 	String get section_about => 'About';
 	String get view_source_title => 'View Source Code';
 	String get view_source_subtitle => 'The source code for this application is available for reading on GitHub. You can also send us your improvement and bug fix requests.';
@@ -154,8 +155,8 @@ class TranslationsAboutAppScreenEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get app_bar_title => 'Information';
-	String get app_name_fallback => 'Note';
+	String get app_bar_title => 'About App';
+	String get app_name_fallback => 'Notes';
 	String get copyright => '©2025 NguyenHienNg';
 }
 
@@ -189,7 +190,7 @@ extension on Translations {
 			case 'note_detail_screen.content_label': return 'Content:';
 			case 'note_detail_screen.content_hint': return 'Enter note content...';
 			case 'note_detail_screen.created_at': return 'Created at: {date}';
-			case 'note_detail_screen.no_content_placeholder': return 'Nothing here ¯\\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
+			case 'note_detail_screen.no_content_placeholder': return 'Nothing here ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 			case 'note_detail_screen.title_empty_error_snackbar': return 'Title cannot be empty!';
 			case 'note_detail_screen.changes_saved_snackbar': return 'Changes saved!';
 			case 'note_detail_screen.dialog_title': return 'Reminder';
@@ -199,7 +200,7 @@ extension on Translations {
 			case 'note_detail_screen.dialog_discard_button': return 'Don\'t Save';
 			case 'note_detail_screen.dialog_ok_button': return 'OK';
 			case 'settings_screen.app_bar_title': return 'Settings';
-			case 'settings_screen.section_settings': return 'Settings';
+			case 'settings_screen.section_appearance': return 'Appearance';
 			case 'settings_screen.theme_title': return 'Theme';
 			case 'settings_screen.theme_system': return 'System Default';
 			case 'settings_screen.theme_light': return 'Light';
@@ -207,8 +208,9 @@ extension on Translations {
 			case 'settings_screen.theme_selection_sheet_title': return 'Select Theme';
 			case 'settings_screen.language_title': return 'Language';
 			case 'settings_screen.language_selection_sheet_title': return 'Select Language';
-			case 'settings_screen.language_vietnamese': return 'Tiếng Việt';
-			case 'settings_screen.language_english': return 'English';
+			case 'settings_screen.language_system': return 'System Default';
+			case 'settings_screen.language_vietnamese': return 'Tiếng Việt (Vietnamese)';
+			case 'settings_screen.language_english': return 'English (US)';
 			case 'settings_screen.section_about': return 'About';
 			case 'settings_screen.view_source_title': return 'View Source Code';
 			case 'settings_screen.view_source_subtitle': return 'The source code for this application is available for reading on GitHub. You can also send us your improvement and bug fix requests.';
@@ -219,8 +221,8 @@ extension on Translations {
 			case 'settings_screen.about_app_title': return 'About App';
 			case 'settings_screen.url_launch_error': return 'Could not launch URL: {url}';
 			case 'settings_screen.unknown': return 'unknown';
-			case 'about_app_screen.app_bar_title': return 'Information';
-			case 'about_app_screen.app_name_fallback': return 'Note';
+			case 'about_app_screen.app_bar_title': return 'About App';
+			case 'about_app_screen.app_name_fallback': return 'Notes';
 			case 'about_app_screen.copyright': return '©2025 NguyenHienNg';
 			default: return null;
 		}
