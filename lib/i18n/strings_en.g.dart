@@ -135,7 +135,7 @@ class TranslationsSettingsScreenEn {
 	String get language_selection_sheet_title => 'Select Language';
 	String get language_system => 'System Default';
 	String get language_vietnamese => 'Tiếng Việt (Vietnamese)';
-	String get language_english => 'English (US)';
+	String get language_english => 'English';
 	String get section_about => 'About';
 	String get view_source_title => 'View Source Code';
 	String get view_source_subtitle => 'The source code for this application is available for reading on GitHub. You can also send us your improvement and bug fix requests.';
@@ -210,7 +210,7 @@ extension on Translations {
 			case 'settings_screen.language_selection_sheet_title': return 'Select Language';
 			case 'settings_screen.language_system': return 'System Default';
 			case 'settings_screen.language_vietnamese': return 'Tiếng Việt (Vietnamese)';
-			case 'settings_screen.language_english': return 'English (US)';
+			case 'settings_screen.language_english': return 'English';
 			case 'settings_screen.section_about': return 'About';
 			case 'settings_screen.view_source_title': return 'View Source Code';
 			case 'settings_screen.view_source_subtitle': return 'The source code for this application is available for reading on GitHub. You can also send us your improvement and bug fix requests.';

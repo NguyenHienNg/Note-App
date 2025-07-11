@@ -132,7 +132,7 @@ class _TranslationsSettingsScreenVi implements TranslationsSettingsScreenEn {
 	@override String get language_selection_sheet_title => 'Chọn Ngôn ngữ';
 	@override String get language_system => 'Mặc định hệ thống';
 	@override String get language_vietnamese => 'Tiếng Việt (Vietnamese)';
-	@override String get language_english => 'English (US)';
+	@override String get language_english => 'English';
 	@override String get section_about => 'Thông tin';
 	@override String get view_source_title => 'Xem mã nguồn';
 	@override String get view_source_subtitle => 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';
@@ -207,7 +207,7 @@ extension on TranslationsVi {
 			case 'settings_screen.language_selection_sheet_title': return 'Chọn Ngôn ngữ';
 			case 'settings_screen.language_system': return 'Mặc định hệ thống';
 			case 'settings_screen.language_vietnamese': return 'Tiếng Việt (Vietnamese)';
-			case 'settings_screen.language_english': return 'English (US)';
+			case 'settings_screen.language_english': return 'English';
 			case 'settings_screen.section_about': return 'Thông tin';
 			case 'settings_screen.view_source_title': return 'Xem mã nguồn';
 			case 'settings_screen.view_source_subtitle': return 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';

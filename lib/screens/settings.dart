@@ -16,7 +16,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final Uri _githubUrl = Uri.parse('https://github.com/NguyenHienNg/My-App');
+  final Uri _githubUrl = Uri.parse('https://github.com/NguyenHienNg/Notes-App');
   // Giá trị ngôn ngữ được chọn: có thể là "en", "vi", hoặc "sys" (mặc định hệ thống)
   String _selectedLanguageCode = "sys";
 
@@ -284,9 +284,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding:
               const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
           children: [
-            const SizedBox(height: 14.0),
+            const SizedBox(height: 8.0),
             _buildSectionHeader(context, t.settings_screen.section_appearance),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 8.0),
             _buildSettingsItem(
               context,
               title: t.settings_screen.theme_title,
@@ -300,9 +300,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => _showLanguageSelectionSheet(context),
             ),
             const Divider(height: 0, thickness: 1.5),
-            const SizedBox(height: 22.0),
-            _buildSectionHeader(context, t.settings_screen.section_about),
             const SizedBox(height: 16.0),
+            _buildSectionHeader(context, t.settings_screen.section_about),
+            const SizedBox(height: 12.0),
             _buildSettingsItem(
               context,
               title: t.settings_screen.view_source_title,
