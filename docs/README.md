@@ -1,7 +1,8 @@
 **English (US)** | [Tiếng Việt (Vietnamese)](README-vi.md)
 
 # Notes
-:toc: macro
+![Static Badg3](https://img.shields.io/badge/Release-v1.0.0-blue?style=flat&logo=github&link=https%3A%2F%2Fgithub.com%2FNguyenHienNg%2FNotes-App%2Freleases%2Ftag%2Fv1.0.0)
+
 A new Flutter project.
 
 ## Getting Started
