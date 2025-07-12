@@ -1,10 +1,11 @@
 **English (US)** | [Tiếng Việt (Vietnamese)](README-vi.md)
 
 # Notes
-[![Release][release-badge]][release-link]
+[![Release][release-badge]][release-link] [![Build CI][build-badge]]
 
 [release-badge]: https://img.shields.io/badge/Release-v1.0.0-blue?logo=github&link=https%3A%2F%2Fgithub.com%2FNguyenHienNg%2FNotes-App%2Freleases%2Ftag%2Fv1.0.0%2F
 [release-link]: https://github.com/NguyenHienNg/Notes-App/releases/tag/v1.0.0
+[build-badge]: https://img.shields.io/badge/Build-Successful-green?logo=github
 
 A new Flutter project.
 
