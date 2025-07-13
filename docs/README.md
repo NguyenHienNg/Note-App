@@ -32,14 +32,11 @@ Other features:
 
 - Related information – You can check out our project on GitHub, contribute translations, or report bugs to help reduce our workload and improve user support.
 
-# POLICIES and LICENSES
-
 If you’ve read through "About me", feel free to review our Privacy and Security Policy and License Agreement below to better understand what we're doing:
 
-- Privacy & Security Policy:
+# Privacy & Security Policy:
 
-
-- License:
+# LICENSES
   Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
 
 Kernel Adiutor is free software: you can redistribute it and/or modify
