@@ -9,15 +9,34 @@
 
 A open source, free app. Ideal for quick and easy notes especially for first time users.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+Notes is a convenient app for when you need to quickly jot down something for work, study, or anything else. Most importantly, it’s designed to be easy to use even for first time users.
 
-A few resources to get you started if this is your first Flutter project:
+The main features of this app include:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Create notes – You can freely write whatever comes to mind, as long as you include a title to make your note stand out.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- View notes – Easily view your saved notes without worrying about losing them or encountering unexpected issues.
+
+- Edit notes – You can modify both the title and the content of your notes as you like, with no limitations.
+
+- You can also delete notes, search for notes, or even leave the content blank when viewing a note.
+
+
+Other features:
+
+- Theme switching – Easily switch between light, dark, or system default themes from the settings menu.
+
+- Multilingual support – Choose your preferred language from the settings.
+
+- Related information – You can check out our project on GitHub, contribute translations, or report bugs to help reduce our workload and improve user support.
+
+# POLICIES and LICENSES
+
+If you’ve read through "About me", feel free to review our Privacy and Security Policy and License Agreement below to better understand what we're doing:
+
+- Privacy & Security Policy:
+
+
+- License:
