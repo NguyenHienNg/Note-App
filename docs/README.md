@@ -32,9 +32,9 @@ Other features:
 
 - Related information – You can check out our project on GitHub, contribute translations, or report bugs to help reduce our workload and improve user support.
 
-If you’ve read through "About me", feel free to review our Privacy and Security Policy and License Agreement below to better understand what we're doing:
+If you’ve read through "About me", feel free to review our Privacy Policy and License Agreement below to better understand what we're doing:
 
-# Privacy & Security Policy:
+# Privacy Policy:
 
 ## License
 
