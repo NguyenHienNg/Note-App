@@ -37,6 +37,7 @@ If you’ve read through "About me", feel free to review our Privacy and Securit
 # Privacy & Security Policy:
 
 ## Licenses
+
   Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
 
   Kernel Adiutor is free software: you can redistribute it and/or modify
