@@ -35,7 +35,6 @@ Notes is a convenient app for when you need to quickly jot down something for wo
 **If you’ve read through "About me", feel free to review our Privacy Policy and License Agreement below to better understand what we're doing:**
 
 Privacy Policy: [See here](https://github.com/NguyenHienNg/Notes-App?tab=MIT-1-ov-file)
-
 License: [See here](https://github.com/NguyenHienNg/Notes-App?tab=security-ov-file)
 
 
