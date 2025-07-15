@@ -1,3 +1,3 @@
 # Privacy Policy
 
-Currently, it is not added... :(
+Sorry, because it hasn't been added yet :(
