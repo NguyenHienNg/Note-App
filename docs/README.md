@@ -36,7 +36,7 @@ Notes is a convenient app for when you need to quickly jot down something for wo
 
 Privacy Policy: [See here!](https://github.com/NguyenHienNg/Notes-App?tab=MIT-1-ov-file) | License: [See here!](https://github.com/NguyenHienNg/Notes-App?tab=security-ov-file)
 
-# Install & Build (For Developers)
+# Install & Build
 
 To install & build in the source code of this app you need to have the following:
 
