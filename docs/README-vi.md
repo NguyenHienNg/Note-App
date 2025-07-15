@@ -36,7 +36,7 @@ Notes là một ứng dụng tiện lợi khi bạn cần ghi chú nhanh chóng 
 
 Chính sách bảo mật: [Xem tại đây!](https://github.com/NguyenHienNg/Notes-App?tab=MIT-1-ov-file) | Giấy phép sử dụng: [Xem tại đây!](https://github.com/NguyenHienNg/Notes-App?tab=security-ov-file)
 
-# Cài đặt & Xây dựng (Dành cho nhà phát triển)
+# Cài đặt & Xây dựng
 
 Để cài đặt & xây dựng trong mã nguồn của ứng dụng này bạn cần phải có những thứ như sao:
 
