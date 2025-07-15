@@ -32,7 +32,7 @@ Notes is a convenient app for when you need to quickly jot down something for wo
 
 - Related information – You can check out our project on GitHub, contribute translations, or report bugs to help reduce our workload and improve user support.
 
-**If you’ve read through "About me", feel free to review our Privacy Policy and License Agreement below to better understand what we're doing:**
+**If you've read the "About" section, you might consider reviewing the Privacy Policy and License to Use below to better understand what we do:**
 
 Privacy Policy: [See here!](https://github.com/NguyenHienNg/Notes-App?tab=MIT-1-ov-file) | License: [See here!](https://github.com/NguyenHienNg/Notes-App?tab=security-ov-file)
 
