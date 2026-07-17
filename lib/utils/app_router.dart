@@ -5,7 +5,6 @@ import '../screens/home_screen.dart';
 import '../screens/note_detail_screen.dart';
 import '../screens/settings.dart';
 import '../screens/about_app_screen.dart';
-import '../screens/test_screen.dart';
 import '../models/note.dart';
 
 // SharedAxisTransition cần cả 2 màn hình dùng cùng transition type
@@ -36,25 +35,6 @@ CustomTransitionPage<T> _buildTransition<T>({
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    // Route test
-    GoRoute(
-      path: '/test',
-      pageBuilder: (context, state) => _buildTransition(
-        context: context,
-        state: state,
-        child: const TestScreen(),
-      ),
-      routes: [
-        GoRoute(
-          path: 'detail',
-          pageBuilder: (context, state) => _buildTransition(
-            context: context,
-            state: state,
-            child: const TestDetailScreen(),
-          ),
-        ),
-      ],
-    ),
     // Route chính
     GoRoute(
       path: '/',
