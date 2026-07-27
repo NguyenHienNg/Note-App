@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/theme_provider.dart';
 import '../i18n/strings.g.dart';
+import '../main.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,31 +16,47 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final Uri _githubUrl = Uri.parse('https://github.com/Dancycat/Notes-App');
-  String _selectedLanguageCode = 'sys';
+  String _selectedLanguageCode = gAppLanguageCode;
+  bool _showTooltip = false;
+  bool _tooltipVisible = false;
 
   @override
   void initState() {
     super.initState();
-    _loadSelectedLanguage();
+    _loadTooltipState();
   }
 
-  void _loadSelectedLanguage() async {
+  void _loadTooltipState() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedLang = prefs.getString('app_language');
+    final isDismissed = prefs.getBool('settings_tooltip_dismissed') ?? false;
     if (!mounted) return;
-    setState(() {
-      _selectedLanguageCode = savedLang ?? 'sys';
-    });
-    if (_selectedLanguageCode == 'sys') {
-      String deviceLang =
-          WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-      if (deviceLang != 'vi' && deviceLang != 'en') deviceLang = 'en';
-      LocaleSettings.setLocale(
-          deviceLang == 'vi' ? AppLocale.vi : AppLocale.en);
-    } else {
-      LocaleSettings.setLocale(
-          _selectedLanguageCode == 'vi' ? AppLocale.vi : AppLocale.en);
+    if (!isDismissed) {
+      setState(() {
+        _showTooltip = true;
+      });
+      // Chờ 50ms cho khung hình đầu tiên dựng opacity = 0.0, sau đó kích hoạt mờ hiện từ từ
+      await Future.delayed(const Duration(milliseconds: 50));
+      if (mounted) {
+        setState(() {
+          _tooltipVisible = true;
+        });
+      }
     }
+  }
+
+  void _dismissTooltip() async {
+    setState(() {
+      _tooltipVisible = false;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('settings_tooltip_dismissed', true);
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) {
+        setState(() {
+          _showTooltip = false;
+        });
+      }
+    });
   }
 
   Future<void> _launchUrl(Uri url, BuildContext context) async {
@@ -48,7 +65,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Cannot open link: $url'),
-          backgroundColor: Colors.red,
         ),
       );
     }
@@ -62,16 +78,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           groupValue: _selectedLanguageCode,
           onChanged: (String? value) async {
             if (value != null) {
+              gAppLanguageCode = value;
               setState(() => _selectedLanguageCode = value);
               if (value == 'sys') {
                 String deviceLang = WidgetsBinding
-                    .instance.platformDispatcher.locale.languageCode;
+                    .instance
+                    .platformDispatcher
+                    .locale
+                    .languageCode;
                 if (deviceLang != 'vi' && deviceLang != 'en') deviceLang = 'en';
                 LocaleSettings.setLocale(
-                    deviceLang == 'vi' ? AppLocale.vi : AppLocale.en);
+                  deviceLang == 'vi' ? AppLocale.vi : AppLocale.en,
+                );
               } else {
                 LocaleSettings.setLocale(
-                    value == 'vi' ? AppLocale.vi : AppLocale.en);
+                  value == 'vi' ? AppLocale.vi : AppLocale.en,
+                );
               }
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('app_language', value);
@@ -149,29 +171,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    return ListTile(
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-      title: Text(title, style: textTheme.titleMedium),
-      subtitle: subtitle != null
-          ? Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
+    return Material(
+      color: Colors.transparent,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 4.0,
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            if (subtitle != null) ...[
+              const SizedBox(height: 2.0),
+              Text(
                 subtitle,
-                style: textTheme.titleMedium?.copyWith(
+                style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.normal,
                 ),
               ),
-            )
-          : null,
-      trailing: trailing,
-      onTap: onTap,
+            ],
+          ],
+        ),
+        trailing: trailing,
+        onTap: onTap,
+      ),
     );
   }
 
   void _showThemeSelectionSheet(
-      BuildContext context, ThemeProvider themeProvider) {
+    BuildContext context,
+    ThemeProvider themeProvider,
+  ) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
@@ -224,18 +261,98 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Widget _buildRichTooltipCard(BuildContext context) {
+    if (!_showTooltip) return const SizedBox.shrink();
+
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        opacity: _tooltipVisible ? 1.0 : 0.0,
+        curve: Curves.easeInOut,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(
+                color: colorScheme.primary.withValues(alpha: 0.2),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.lightbulb_outline,
+                      color: colorScheme.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      t.settings_screen.tooltip_title,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text.rich(
+                  TextSpan(
+                    text: t.settings_screen.tooltip_prefix,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: t.settings_screen.tooltip_highlight,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      TextSpan(
+                        text: t.settings_screen.tooltip_suffix,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: _dismissTooltip,
+                    child: Text(t.settings_screen.tooltip_btn_got_it),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(t.settings_screen.app_bar_title),
-      ),
+      appBar: AppBar(title: Text(t.settings_screen.app_bar_title)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
           children: [
+            _buildRichTooltipCard(context),
             const SizedBox(height: 8.0),
             _buildSectionHeader(context, t.settings_screen.section_appearance),
             const SizedBox(height: 8.0),
@@ -263,21 +380,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             _buildSettingsItem(
               context,
-              title: t.settings_screen.help_translate_title,
-              subtitle: t.settings_screen.help_translate_subtitle,
-              onTap: () => _launchUrl(_githubUrl, context),
-            ),
-            _buildSettingsItem(
-              context,
-              title: t.settings_screen.report_bug_title,
-              subtitle: t.settings_screen.report_bug_subtitle,
-              onTap: () => _launchUrl(_githubUrl, context),
-            ),
-            // FIX: Dùng go_router thay vì MaterialPageRoute
-            _buildSettingsItem(
-              context,
               title: t.settings_screen.about_app_title,
               onTap: () => context.push('/settings/about'),
+            ),
+            _buildSettingsItem(
+              context,
+              title: t.settings_screen.section_advanced,
+              trailing: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  'BETA',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              onTap: () => context.push('/settings/advanced'),
             ),
           ],
         ),
