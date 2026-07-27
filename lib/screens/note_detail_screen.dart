@@ -79,15 +79,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.error_outline, color: Colors.white),
+              const Icon(Icons.error_outline),
               const SizedBox(width: 8),
-              Text(
-                t.note_detail_screen.title_empty_error_snackbar,
-                style: TextStyle(color: Colors.white),
-              ),
+              Text(t.note_detail_screen.title_empty_error_snackbar),
             ],
           ),
-          backgroundColor: Colors.red,
           duration: const Duration(seconds: 3),
         ),
       );
@@ -102,11 +98,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          t.note_detail_screen.changes_saved_snackbar,
-          style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+        content: Text(t.note_detail_screen.changes_saved_snackbar),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -262,19 +254,20 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        final navigator = Navigator.of(context);
+        final router = GoRouter.of(context);
         final shouldPop = await _showExitConfirmationDialog();
-        if (shouldPop) context.pop();
+        if (!mounted) return;
+        if (shouldPop) router.pop();
       },
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () async {
-              final navigator = Navigator.of(context);
+              final router = GoRouter.of(context);
               final shouldPop = await _showExitConfirmationDialog();
               if (!mounted) return;
-              if (shouldPop) context.pop();
+              if (shouldPop) router.pop();
             },
           ),
           title: _isEditing ? Text(t.note_detail_screen.edit_note_title) : const Text(''),
@@ -335,7 +328,12 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                     const SizedBox(height: 8),
                     if (!_isEditing)
                       Text(
-                        t.note_card.created_at.replaceAll('{date}', DateFormat.yMMMMEEEEd().add_jm().format(currentNote.createdAt)),
+                        t.note_card.created_at.replaceAll(
+                          '{date}',
+                          DateFormat.yMMMd(LocaleSettings.currentLocale.languageCode)
+                              .add_jm()
+                              .format(currentNote.createdAt),
+                        ),
                         style: textTheme.bodySmall,
                       ),
                     const Divider(height: 32, thickness: 1.0),
