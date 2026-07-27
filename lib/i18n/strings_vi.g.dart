@@ -3,6 +3,7 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsVi implements Translations {
+class TranslationsVi with BaseTranslations<AppLocale, Translations> implements Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsVi({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -37,17 +38,17 @@ class TranslationsVi implements Translations {
 
 	// Translations
 	@override String get app_name => 'Ghi chú';
-	@override late final _TranslationsHomeScreenVi home_screen = _TranslationsHomeScreenVi._(_root);
-	@override late final _TranslationsNoteCardVi note_card = _TranslationsNoteCardVi._(_root);
-	@override late final _TranslationsAddNoteSheetVi add_note_sheet = _TranslationsAddNoteSheetVi._(_root);
-	@override late final _TranslationsNoteDetailScreenVi note_detail_screen = _TranslationsNoteDetailScreenVi._(_root);
-	@override late final _TranslationsSettingsScreenVi settings_screen = _TranslationsSettingsScreenVi._(_root);
-	@override late final _TranslationsAboutAppScreenVi about_app_screen = _TranslationsAboutAppScreenVi._(_root);
+	@override late final _Translations$home_screen$vi home_screen = _Translations$home_screen$vi._(_root);
+	@override late final _Translations$note_card$vi note_card = _Translations$note_card$vi._(_root);
+	@override late final _Translations$add_note_sheet$vi add_note_sheet = _Translations$add_note_sheet$vi._(_root);
+	@override late final _Translations$note_detail_screen$vi note_detail_screen = _Translations$note_detail_screen$vi._(_root);
+	@override late final _Translations$settings_screen$vi settings_screen = _Translations$settings_screen$vi._(_root);
+	@override late final _Translations$about_app_screen$vi about_app_screen = _Translations$about_app_screen$vi._(_root);
 }
 
 // Path: home_screen
-class _TranslationsHomeScreenVi implements TranslationsHomeScreenEn {
-	_TranslationsHomeScreenVi._(this._root);
+class _Translations$home_screen$vi implements Translations$home_screen$en {
+	_Translations$home_screen$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
@@ -60,8 +61,8 @@ class _TranslationsHomeScreenVi implements TranslationsHomeScreenEn {
 }
 
 // Path: note_card
-class _TranslationsNoteCardVi implements TranslationsNoteCardEn {
-	_TranslationsNoteCardVi._(this._root);
+class _Translations$note_card$vi implements Translations$note_card$en {
+	_Translations$note_card$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
@@ -75,8 +76,8 @@ class _TranslationsNoteCardVi implements TranslationsNoteCardEn {
 }
 
 // Path: add_note_sheet
-class _TranslationsAddNoteSheetVi implements TranslationsAddNoteSheetEn {
-	_TranslationsAddNoteSheetVi._(this._root);
+class _Translations$add_note_sheet$vi implements Translations$add_note_sheet$en {
+	_Translations$add_note_sheet$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
@@ -91,8 +92,8 @@ class _TranslationsAddNoteSheetVi implements TranslationsAddNoteSheetEn {
 }
 
 // Path: note_detail_screen
-class _TranslationsNoteDetailScreenVi implements TranslationsNoteDetailScreenEn {
-	_TranslationsNoteDetailScreenVi._(this._root);
+class _Translations$note_detail_screen$vi implements Translations$note_detail_screen$en {
+	_Translations$note_detail_screen$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
@@ -115,8 +116,8 @@ class _TranslationsNoteDetailScreenVi implements TranslationsNoteDetailScreenEn 
 }
 
 // Path: settings_screen
-class _TranslationsSettingsScreenVi implements TranslationsSettingsScreenEn {
-	_TranslationsSettingsScreenVi._(this._root);
+class _Translations$settings_screen$vi implements Translations$settings_screen$en {
+	_Translations$settings_screen$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
@@ -136,93 +137,195 @@ class _TranslationsSettingsScreenVi implements TranslationsSettingsScreenEn {
 	@override String get section_about => 'Thông tin';
 	@override String get view_source_title => 'Xem mã nguồn';
 	@override String get view_source_subtitle => 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';
-	@override String get help_translate_title => 'Giúp chúng tôi dịch!';
-	@override String get help_translate_subtitle => 'Nếu bạn thích ứng dụng này, bạn nên cân nhắc dịch ứng dụng này cho ngôn ngữ của bạn.';
-	@override String get report_bug_title => 'Báo cáo lỗi';
-	@override String get report_bug_subtitle => 'Nếu bạn có bất kỳ gợi ý hay vấn đề nào, vui lòng báo cáo chúng vào dự án của chúng tôi tại GitHub.';
 	@override String get about_app_title => 'Về ứng dụng';
 	@override String get url_launch_error => 'Không thể mở liên kết: {url}';
 	@override String get unknown => 'Không xác định';
+	@override String get section_advanced => 'Tùy chọn nâng cao';
+	@override String get advanced_settings_app_bar => 'Tùy chọn nâng cao';
+	@override String get animations_title => 'Hoạt ảnh';
+	@override String get animations_subtitle => 'Tắt hoạt ảnh màn hình nếu thiết bị quá yếu';
+	@override String get theme_color_title => 'Màu chủ đề';
+	@override String get theme_color_selection_title => 'Chọn Màu chủ đề';
+	@override String get color_red => 'Đỏ';
+	@override String get color_green => 'Xanh lá';
+	@override String get color_blue => 'Xanh dương';
+	@override String get color_brown => 'Nâu';
+	@override String get color_purple => 'Tím';
+	@override String get color_yellow => 'Vàng';
+	@override String get color_orange => 'Cam';
+	@override String get color_system => 'Màu hệ thống (Android 12+)';
+	@override String get backup_title => 'Sao lưu dữ liệu';
+	@override String get backup_subtitle => 'Chọn và xuất ghi chú dưới dạng file sao lưu';
+	@override String get backup_select_notes => 'Chọn ghi chú để sao lưu';
+	@override String get backup_select_all => 'Chọn tất cả';
+	@override String get backup_deselect_all => 'Bỏ chọn tất cả';
+	@override String get backup_no_notes => 'Bạn không có ghi chú nào để sao lưu.';
+	@override String get backup_export_tooltip => 'Xuất file sao lưu';
+	@override String get backup_success => 'Đã xuất file sao lưu thành công!';
+	@override String get backup_no_selection => 'Vui lòng chọn ít nhất một ghi chú.';
+	@override String get restore_title => 'Khôi phục dữ liệu';
+	@override String get restore_subtitle => 'Nhập file sao lưu để khôi phục ghi chú';
+	@override String get restore_select_notes => 'Chọn ghi chú để khôi phục';
+	@override String get restore_screen_title => 'Khôi phục ghi chú';
+	@override String get restore_confirm_message => 'Bạn muốn khôi phục ghi chú này chứ?';
+	@override String get restore_btn_replace => 'Thay thế';
+	@override String get restore_btn_rename => 'Đổi tên';
+	@override String get restore_btn_confirm => 'Đúng';
+	@override String get restore_btn_cancel => 'Hủy';
+	@override String get restore_success => 'Khôi phục ghi chú thành công!';
+	@override String get restore_file_error => 'Không thể đọc file sao lưu!';
+	@override String get restore_no_notes => 'Không tìm thấy ghi chú nào trong file sao lưu.';
+	@override String get restore_invalid_json => 'Mã sao lưu không hợp lệ hoặc sai cấu trúc dữ liệu!';
+	@override String get restore_btn_restore => 'Khôi phục';
+	@override String get restore_no_selection => 'Vui lòng chọn ít nhất một ghi chú.';
+	@override String get restore_cancel_dialog_title => 'Nhắc nhở';
+	@override String get restore_cancel_dialog_content => 'Bạn chắc chắn muốn hủy tiến trình này không?';
+	@override String get diagnostics_title => 'Nhật ký chẩn đoán';
+	@override String get diagnostics_subtitle => 'Xem lịch sử hoạt động hệ thống';
+	@override String get diagnostics_disabled => 'Tính năng này đã bị tắt bởi nhà phát triển.';
+	@override String get diagnostics_app_bar => 'Nhật ký hệ thống';
+	@override String get diagnostics_empty => 'Chưa có nhật ký hoạt động nào.';
+	@override String get diagnostics_clear => 'Xóa nhật ký';
+	@override String get diagnostics_copy => 'Sao chép';
+	@override String get diagnostics_copied => 'Đã sao chép nhật ký chẩn đoán!';
+	@override String get advanced_footer_note => 'Các tùy chọn này sẽ được thêm vào trong bản phát hành chính thức';
+	@override String get tooltip_title => 'Mẹo';
+	@override String get tooltip_prefix => 'Bạn có thể tùy chỉnh ';
+	@override String get tooltip_highlight => 'Chủ đề, Ngôn ngữ ';
+	@override String get tooltip_suffix => 'và các cài đặt Nâng cao ngay tại đây.';
+	@override String get tooltip_btn_got_it => 'Đã hiểu';
 }
 
 // Path: about_app_screen
-class _TranslationsAboutAppScreenVi implements TranslationsAboutAppScreenEn {
-	_TranslationsAboutAppScreenVi._(this._root);
+class _Translations$about_app_screen$vi implements Translations$about_app_screen$en {
+	_Translations$about_app_screen$vi._(this._root);
 
 	final TranslationsVi _root; // ignore: unused_field
 
 	// Translations
 	@override String get app_bar_title => 'Về ứng dụng';
 	@override String get app_name_fallback => 'Notes (Ghi chú)';
-	@override String get copyright => '©2025 NguyenHienNg';
+	@override String get copyright => '©2026 NguyenHienNg';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <vi>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsVi {
 	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'app_name': return 'Ghi chú';
-			case 'home_screen.app_bar_title': return 'Ghi chú';
-			case 'home_screen.search_hint': return 'Tìm kiếm ghi chú...';
-			case 'home_screen.no_notes_empty_state': return 'Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!';
-			case 'home_screen.no_notes_found_search': return 'Không tìm thấy ghi chú nào phù hợp với "{searchText}"';
-			case 'home_screen.create_note_button': return 'Tạo ghi chú';
-			case 'note_card.created_at': return 'Tạo lúc: {date}';
-			case 'note_card.delete_confirm_title': return 'Xác nhận xóa';
-			case 'note_card.delete_confirm_content': return 'Bạn có chắc chắn muốn xóa ghi chú này không?';
-			case 'note_card.cancel_button': return 'Hủy';
-			case 'note_card.delete_button': return 'Xóa';
-			case 'note_card.note_deleted_snackbar': return 'Đã xóa ghi chú!';
-			case 'add_note_sheet.add_note_title': return 'Tạo ghi chú';
-			case 'add_note_sheet.title_label': return 'Tiêu đề';
-			case 'add_note_sheet.title_hint': return 'Ví dụ: Lên kế hoạch cuối tuần';
-			case 'add_note_sheet.content_label': return 'Nội dung';
-			case 'add_note_sheet.content_hint': return 'Ví dụ: Đi siêu thị, tập thể dục, đọc sách...';
-			case 'add_note_sheet.save_note_button': return 'Lưu ghi chú';
-			case 'add_note_sheet.title_empty_error': return 'Tiêu đề không được để trống.';
-			case 'note_detail_screen.edit_note_title': return 'Chỉnh sửa ghi chú';
-			case 'note_detail_screen.title_label': return 'Tiêu đề';
-			case 'note_detail_screen.title_hint': return 'Nhập tiêu đề ghi chú...';
-			case 'note_detail_screen.content_label': return 'Nội dung:';
-			case 'note_detail_screen.content_hint': return 'Nhập nội dung ghi chú...';
-			case 'note_detail_screen.created_at': return 'Tạo lúc: {date}';
-			case 'note_detail_screen.no_content_placeholder': return 'Chẳng có gì ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
-			case 'note_detail_screen.title_empty_error_snackbar': return 'Tiêu đề không được để trống!';
-			case 'note_detail_screen.changes_saved_snackbar': return 'Đã lưu thay đổi!';
-			case 'note_detail_screen.dialog_title': return 'Nhắc nhở';
-			case 'note_detail_screen.dialog_content_save_confirm': return 'Bạn chắc chắn muốn lưu thay đổi này không?';
-			case 'note_detail_screen.dialog_content_exit_confirm': return 'Bạn có chắc muốn lưu thay đổi này không?';
-			case 'note_detail_screen.dialog_cancel_button': return 'Hủy';
-			case 'note_detail_screen.dialog_discard_button': return 'Không lưu';
-			case 'note_detail_screen.dialog_ok_button': return 'OK';
-			case 'settings_screen.app_bar_title': return 'Cài đặt';
-			case 'settings_screen.section_appearance': return 'Giao diện';
-			case 'settings_screen.theme_title': return 'Chủ đề';
-			case 'settings_screen.theme_system': return 'Mặc định hệ thống';
-			case 'settings_screen.theme_light': return 'Sáng';
-			case 'settings_screen.theme_dark': return 'Tối';
-			case 'settings_screen.theme_selection_sheet_title': return 'Chọn Chủ đề';
-			case 'settings_screen.language_title': return 'Ngôn ngữ';
-			case 'settings_screen.language_selection_sheet_title': return 'Chọn Ngôn ngữ';
-			case 'settings_screen.language_system': return 'Mặc định hệ thống';
-			case 'settings_screen.language_vietnamese': return 'Tiếng Việt (Vietnamese)';
-			case 'settings_screen.language_english': return 'English';
-			case 'settings_screen.section_about': return 'Thông tin';
-			case 'settings_screen.view_source_title': return 'Xem mã nguồn';
-			case 'settings_screen.view_source_subtitle': return 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.';
-			case 'settings_screen.help_translate_title': return 'Giúp chúng tôi dịch!';
-			case 'settings_screen.help_translate_subtitle': return 'Nếu bạn thích ứng dụng này, bạn nên cân nhắc dịch ứng dụng này cho ngôn ngữ của bạn.';
-			case 'settings_screen.report_bug_title': return 'Báo cáo lỗi';
-			case 'settings_screen.report_bug_subtitle': return 'Nếu bạn có bất kỳ gợi ý hay vấn đề nào, vui lòng báo cáo chúng vào dự án của chúng tôi tại GitHub.';
-			case 'settings_screen.about_app_title': return 'Về ứng dụng';
-			case 'settings_screen.url_launch_error': return 'Không thể mở liên kết: {url}';
-			case 'settings_screen.unknown': return 'Không xác định';
-			case 'about_app_screen.app_bar_title': return 'Về ứng dụng';
-			case 'about_app_screen.app_name_fallback': return 'Notes (Ghi chú)';
-			case 'about_app_screen.copyright': return '©2025 NguyenHienNg';
-			default: return null;
-		}
+		return switch (path) {
+			'app_name' => 'Ghi chú',
+			'home_screen.app_bar_title' => 'Ghi chú',
+			'home_screen.search_hint' => 'Tìm kiếm ghi chú...',
+			'home_screen.no_notes_empty_state' => 'Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!',
+			'home_screen.no_notes_found_search' => 'Không tìm thấy ghi chú nào phù hợp với "{searchText}"',
+			'home_screen.create_note_button' => 'Tạo ghi chú',
+			'note_card.created_at' => 'Tạo lúc: {date}',
+			'note_card.delete_confirm_title' => 'Xác nhận xóa',
+			'note_card.delete_confirm_content' => 'Bạn có chắc chắn muốn xóa ghi chú này không?',
+			'note_card.cancel_button' => 'Hủy',
+			'note_card.delete_button' => 'Xóa',
+			'note_card.note_deleted_snackbar' => 'Đã xóa ghi chú!',
+			'add_note_sheet.add_note_title' => 'Tạo ghi chú',
+			'add_note_sheet.title_label' => 'Tiêu đề',
+			'add_note_sheet.title_hint' => 'Ví dụ: Lên kế hoạch cuối tuần',
+			'add_note_sheet.content_label' => 'Nội dung',
+			'add_note_sheet.content_hint' => 'Ví dụ: Đi siêu thị, tập thể dục, đọc sách...',
+			'add_note_sheet.save_note_button' => 'Lưu ghi chú',
+			'add_note_sheet.title_empty_error' => 'Tiêu đề không được để trống.',
+			'note_detail_screen.edit_note_title' => 'Chỉnh sửa ghi chú',
+			'note_detail_screen.title_label' => 'Tiêu đề',
+			'note_detail_screen.title_hint' => 'Nhập tiêu đề ghi chú...',
+			'note_detail_screen.content_label' => 'Nội dung:',
+			'note_detail_screen.content_hint' => 'Nhập nội dung ghi chú...',
+			'note_detail_screen.created_at' => 'Tạo lúc: {date}',
+			'note_detail_screen.no_content_placeholder' => 'Chẳng có gì ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯',
+			'note_detail_screen.title_empty_error_snackbar' => 'Tiêu đề không được để trống!',
+			'note_detail_screen.changes_saved_snackbar' => 'Đã lưu thay đổi!',
+			'note_detail_screen.dialog_title' => 'Nhắc nhở',
+			'note_detail_screen.dialog_content_save_confirm' => 'Bạn chắc chắn muốn lưu thay đổi này không?',
+			'note_detail_screen.dialog_content_exit_confirm' => 'Bạn có chắc muốn lưu thay đổi này không?',
+			'note_detail_screen.dialog_cancel_button' => 'Hủy',
+			'note_detail_screen.dialog_discard_button' => 'Không lưu',
+			'note_detail_screen.dialog_ok_button' => 'OK',
+			'settings_screen.app_bar_title' => 'Cài đặt',
+			'settings_screen.section_appearance' => 'Giao diện',
+			'settings_screen.theme_title' => 'Chủ đề',
+			'settings_screen.theme_system' => 'Mặc định hệ thống',
+			'settings_screen.theme_light' => 'Sáng',
+			'settings_screen.theme_dark' => 'Tối',
+			'settings_screen.theme_selection_sheet_title' => 'Chọn Chủ đề',
+			'settings_screen.language_title' => 'Ngôn ngữ',
+			'settings_screen.language_selection_sheet_title' => 'Chọn Ngôn ngữ',
+			'settings_screen.language_system' => 'Mặc định hệ thống',
+			'settings_screen.language_vietnamese' => 'Tiếng Việt (Vietnamese)',
+			'settings_screen.language_english' => 'English',
+			'settings_screen.section_about' => 'Thông tin',
+			'settings_screen.view_source_title' => 'Xem mã nguồn',
+			'settings_screen.view_source_subtitle' => 'Mã nguồn của ứng dụng này có sẵn để đọc trên GitHub. Ngoài ra bạn có thể gửi yêu cầu cho chúng tôi về những cải tiến và sửa lỗi của bạn.',
+			'settings_screen.about_app_title' => 'Về ứng dụng',
+			'settings_screen.url_launch_error' => 'Không thể mở liên kết: {url}',
+			'settings_screen.unknown' => 'Không xác định',
+			'settings_screen.section_advanced' => 'Tùy chọn nâng cao',
+			'settings_screen.advanced_settings_app_bar' => 'Tùy chọn nâng cao',
+			'settings_screen.animations_title' => 'Hoạt ảnh',
+			'settings_screen.animations_subtitle' => 'Tắt hoạt ảnh màn hình nếu thiết bị quá yếu',
+			'settings_screen.theme_color_title' => 'Màu chủ đề',
+			'settings_screen.theme_color_selection_title' => 'Chọn Màu chủ đề',
+			'settings_screen.color_red' => 'Đỏ',
+			'settings_screen.color_green' => 'Xanh lá',
+			'settings_screen.color_blue' => 'Xanh dương',
+			'settings_screen.color_brown' => 'Nâu',
+			'settings_screen.color_purple' => 'Tím',
+			'settings_screen.color_yellow' => 'Vàng',
+			'settings_screen.color_orange' => 'Cam',
+			'settings_screen.color_system' => 'Màu hệ thống (Android 12+)',
+			'settings_screen.backup_title' => 'Sao lưu dữ liệu',
+			'settings_screen.backup_subtitle' => 'Chọn và xuất ghi chú dưới dạng file sao lưu',
+			'settings_screen.backup_select_notes' => 'Chọn ghi chú để sao lưu',
+			'settings_screen.backup_select_all' => 'Chọn tất cả',
+			'settings_screen.backup_deselect_all' => 'Bỏ chọn tất cả',
+			'settings_screen.backup_no_notes' => 'Bạn không có ghi chú nào để sao lưu.',
+			'settings_screen.backup_export_tooltip' => 'Xuất file sao lưu',
+			'settings_screen.backup_success' => 'Đã xuất file sao lưu thành công!',
+			'settings_screen.backup_no_selection' => 'Vui lòng chọn ít nhất một ghi chú.',
+			'settings_screen.restore_title' => 'Khôi phục dữ liệu',
+			'settings_screen.restore_subtitle' => 'Nhập file sao lưu để khôi phục ghi chú',
+			'settings_screen.restore_select_notes' => 'Chọn ghi chú để khôi phục',
+			'settings_screen.restore_screen_title' => 'Khôi phục ghi chú',
+			'settings_screen.restore_confirm_message' => 'Bạn muốn khôi phục ghi chú này chứ?',
+			'settings_screen.restore_btn_replace' => 'Thay thế',
+			'settings_screen.restore_btn_rename' => 'Đổi tên',
+			'settings_screen.restore_btn_confirm' => 'Đúng',
+			'settings_screen.restore_btn_cancel' => 'Hủy',
+			'settings_screen.restore_success' => 'Khôi phục ghi chú thành công!',
+			'settings_screen.restore_file_error' => 'Không thể đọc file sao lưu!',
+			'settings_screen.restore_no_notes' => 'Không tìm thấy ghi chú nào trong file sao lưu.',
+			'settings_screen.restore_invalid_json' => 'Mã sao lưu không hợp lệ hoặc sai cấu trúc dữ liệu!',
+			'settings_screen.restore_btn_restore' => 'Khôi phục',
+			'settings_screen.restore_no_selection' => 'Vui lòng chọn ít nhất một ghi chú.',
+			'settings_screen.restore_cancel_dialog_title' => 'Nhắc nhở',
+			'settings_screen.restore_cancel_dialog_content' => 'Bạn chắc chắn muốn hủy tiến trình này không?',
+			'settings_screen.diagnostics_title' => 'Nhật ký chẩn đoán',
+			'settings_screen.diagnostics_subtitle' => 'Xem lịch sử hoạt động hệ thống',
+			'settings_screen.diagnostics_disabled' => 'Tính năng này đã bị tắt bởi nhà phát triển.',
+			'settings_screen.diagnostics_app_bar' => 'Nhật ký hệ thống',
+			'settings_screen.diagnostics_empty' => 'Chưa có nhật ký hoạt động nào.',
+			'settings_screen.diagnostics_clear' => 'Xóa nhật ký',
+			'settings_screen.diagnostics_copy' => 'Sao chép',
+			'settings_screen.diagnostics_copied' => 'Đã sao chép nhật ký chẩn đoán!',
+			'settings_screen.advanced_footer_note' => 'Các tùy chọn này sẽ được thêm vào trong bản phát hành chính thức',
+			'settings_screen.tooltip_title' => 'Mẹo',
+			'settings_screen.tooltip_prefix' => 'Bạn có thể tùy chỉnh ',
+			'settings_screen.tooltip_highlight' => 'Chủ đề, Ngôn ngữ ',
+			'settings_screen.tooltip_suffix' => 'và các cài đặt Nâng cao ngay tại đây.',
+			'settings_screen.tooltip_btn_got_it' => 'Đã hiểu',
+			'about_app_screen.app_bar_title' => 'Về ứng dụng',
+			'about_app_screen.app_name_fallback' => 'Notes (Ghi chú)',
+			'about_app_screen.copyright' => '©2026 NguyenHienNg',
+			_ => null,
+		};
 	}
 }
-
