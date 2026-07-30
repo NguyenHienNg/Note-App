@@ -1,8 +1,10 @@
 // lib/screens/about_app_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../i18n/strings.g.dart';
+
 class AboutAppScreen extends StatefulWidget {
   const AboutAppScreen({super.key});
 
@@ -13,6 +15,7 @@ class AboutAppScreen extends StatefulWidget {
 class _AboutAppScreenState extends State<AboutAppScreen> {
   String _version = '';
   String _buildNumber = '';
+  bool _hasExplicitBuildNumber = false;
 
   @override
   void initState() {
@@ -21,11 +24,40 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
   }
 
   Future<void> _initPackageInfo() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String ver = '';
+    String build = '';
+    bool hasExplicitBuild = false;
+
+    try {
+      final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      ver = packageInfo.version;
+      build = packageInfo.buildNumber;
+    } catch (_) {}
+
+    try {
+      final pubspecContent = await rootBundle.loadString('pubspec.yaml');
+      final versionLine = pubspecContent
+          .split('\n')
+          .firstWhere((line) => line.trim().startsWith('version:'), orElse: () => '');
+      if (versionLine.isNotEmpty) {
+        final versionValue = versionLine.split(':').last.trim();
+        final parts = versionValue.split('+');
+        ver = parts[0].trim();
+        if (parts.length > 1 && parts[1].trim().isNotEmpty) {
+          build = parts[1].trim();
+          hasExplicitBuild = true;
+        } else {
+          build = '';
+          hasExplicitBuild = false;
+        }
+      }
+    } catch (_) {}
+
     if (!mounted) return;
     setState(() {
-      _version = packageInfo.version;
-      _buildNumber = packageInfo.buildNumber;
+      _version = ver;
+      _buildNumber = build;
+      _hasExplicitBuildNumber = hasExplicitBuild;
     });
   }
 
@@ -62,7 +94,9 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'v$_version ($_buildNumber)', // Phiên bản và số bản dựng
+              (_hasExplicitBuildNumber && _buildNumber.isNotEmpty)
+                  ? 'v$_version ($_buildNumber)'
+                  : 'v$_version',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
