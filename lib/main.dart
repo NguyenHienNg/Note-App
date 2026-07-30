@@ -14,19 +14,15 @@ import 'services/diagnostics_service.dart';
 
 String gAppLanguageCode = 'sys';
 
-Future<String> getInitialLanguage() async {
+Future<void> initLanguage() async {
   final prefs = await SharedPreferences.getInstance();
   final savedLang = prefs.getString('app_language');
   gAppLanguageCode = savedLang ?? 'sys';
+  
   if (savedLang == null || savedLang == 'sys') {
-    String deviceLang =
-        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-    if (deviceLang != 'vi' && deviceLang != 'en') {
-      deviceLang = 'en';
-    }
-    return deviceLang;
+    LocaleSettings.useDeviceLocale();
   } else {
-    return savedLang;
+    LocaleSettings.setLocaleRaw(savedLang);
   }
 }
 
@@ -52,13 +48,8 @@ void main() {
       // FIX: Edge-to-edge — Flutter không cần tính toán lại layout khi system bars thay đổi
       await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-      // Thiết lập ngôn ngữ ban đầu
-      final initialLanguage = await getInitialLanguage();
-      if (initialLanguage == 'vi') {
-        LocaleSettings.setLocale(AppLocale.vi);
-      } else {
-        LocaleSettings.setLocale(AppLocale.en);
-      }
+      // Thiết lập ngôn ngữ ban đầu qua slang LocaleSettings
+      await initLanguage();
 
       runApp(TranslationProvider(child: const MyApp()));
     },
@@ -99,8 +90,25 @@ class MyApp extends StatelessWidget {
                   lightDynamic != null &&
                   darkDynamic != null) {
                 // Hỗ trợ màu hệ thống (Material You - Android 12+)
-                lightColorScheme = lightDynamic.harmonized();
-                darkColorScheme = darkDynamic.harmonized();
+                // Kiểm tra độ bão hòa màu (saturation) để tránh màu xám đục từ hình nền
+                final lightHsv = HSVColor.fromColor(lightDynamic.primary);
+                final darkHsv = HSVColor.fromColor(darkDynamic.primary);
+
+                final lightSeed = lightHsv.saturation < 0.15
+                    ? Colors.indigo
+                    : lightDynamic.primary;
+                final darkSeed = darkHsv.saturation < 0.15
+                    ? Colors.indigo
+                    : darkDynamic.primary;
+
+                lightColorScheme = ColorScheme.fromSeed(
+                  seedColor: lightSeed,
+                  brightness: Brightness.light,
+                );
+                darkColorScheme = ColorScheme.fromSeed(
+                  seedColor: darkSeed,
+                  brightness: Brightness.dark,
+                );
               } else {
                 const seedColors = {
                   AppThemeColor.red: Colors.red,
