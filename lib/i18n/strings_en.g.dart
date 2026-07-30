@@ -163,8 +163,8 @@ class Translations$note_detail_screen$en {
 	/// en: 'Created at: {date}'
 	String get created_at => 'Created at: {date}';
 
-	/// en: 'Nothing here ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯'
-	String get no_content_placeholder => 'Nothing here ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
+	/// en: 'Nothing here ¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯'
+	String get no_content_placeholder => 'Nothing here ¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯';
 
 	/// en: 'Title cannot be empty!'
 	String get title_empty_error_snackbar => 'Title cannot be empty!';
@@ -570,7 +570,7 @@ extension on Translations {
 			'note_detail_screen.content_label' => 'Content:',
 			'note_detail_screen.content_hint' => 'Enter note content...',
 			'note_detail_screen.created_at' => 'Created at: {date}',
-			'note_detail_screen.no_content_placeholder' => 'Nothing here ¯⁠\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯',
+			'note_detail_screen.no_content_placeholder' => 'Nothing here ¯⁠\\⁠_⁠(⁠ツ⁠)⁠_⁠/⁠¯',
 			'note_detail_screen.title_empty_error_snackbar' => 'Title cannot be empty!',
 			'note_detail_screen.changes_saved_snackbar' => 'Changes saved!',
 			'note_detail_screen.dialog_title' => 'Reminder',
