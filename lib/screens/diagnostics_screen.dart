@@ -209,8 +209,11 @@ class _DiagnosticsScreenState extends State<DiagnosticsScreen> {
                       margin: const EdgeInsets.symmetric(horizontal: 16.0),
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(12.0),
+                        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(16.0),
+                        border: Border.all(
+                          color: colorScheme.primary.withValues(alpha: 0.2),
+                        ),
                       ),
                       child: SelectableText(
                         _logcatOutput!,
@@ -236,9 +239,18 @@ class _DiagnosticsScreenState extends State<DiagnosticsScreen> {
   ) {
     final levelColor = _getLevelColor(entry.level, colorScheme);
 
-    return Card(
+    return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.2),
+        ),
+      ),
       child: ExpansionTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         leading: Icon(
           _getLevelIcon(entry.level),
           color: levelColor,
@@ -264,7 +276,7 @@ class _DiagnosticsScreenState extends State<DiagnosticsScreen> {
               padding: const EdgeInsets.all(12.0),
               margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerHighest,
+                color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: SelectableText(
