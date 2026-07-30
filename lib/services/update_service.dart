@@ -92,16 +92,29 @@ class UpdateService {
     final releaseDate = data['release_date'] as String? ?? '';
     final changelog = (data['changelog'] as Map<String, dynamic>?) ?? {};
 
-    // Chuẩn hóa chuỗi phiên bản (ví dụ "1.0.1+2" -> "1.0.1")
-    final latestVersionClean = latestVersionRaw.split('+').first;
-    final currentVersionClean = currentVersion.split('+').first;
+    // Chuẩn hóa chuỗi phiên bản (ví dụ "1.0.2-beta+1" -> "1.0.2")
+    final latestVersionClean =
+        latestVersionRaw.split('-').first.split('+').first.trim();
+    final currentVersionClean =
+        currentVersion.split('-').first.split('+').first.trim();
+
+    final isLatestPreRelease = latestVersionRaw.contains('-');
+    final isCurrentPreRelease = currentVersion.contains('-');
 
     bool hasUpdate = false;
     if (_isVersionNewer(latestVersionClean, currentVersionClean)) {
       hasUpdate = true;
-    } else if (latestVersionClean == currentVersionClean &&
-        buildNumber > currentBuildNumber) {
-      hasUpdate = true;
+    } else if (latestVersionClean == currentVersionClean) {
+      if (!isCurrentPreRelease && isLatestPreRelease) {
+        // Bản hiện tại là Stable (1.0.1) mà API là Beta (1.0.1-beta...) -> Không cần cập nhật
+        hasUpdate = false;
+      } else if (isCurrentPreRelease && !isLatestPreRelease) {
+        // Bản hiện tại là Beta (1.0.1-beta) mà API đã ra Stable (1.0.1) -> Nâng cấp lên Stable
+        hasUpdate = true;
+      } else if (buildNumber > currentBuildNumber) {
+        // Cả 2 cùng loại (cùng Stable hoặc cùng Beta) và số bản dựng trên API lớn hơn
+        hasUpdate = true;
+      }
     }
 
     return UpdateInfo(
@@ -274,12 +287,20 @@ class UpdateService {
   /// Helper so sánh Semantic Versioning (v1 > v2)
   bool _isVersionNewer(String v1, String v2) {
     try {
-      final parts1 = v1.split('.').map((e) => int.tryParse(e) ?? 0).toList();
-      final parts2 = v2.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+      final cleanV1 = v1.split('-').first.split('+').first.trim();
+      final cleanV2 = v2.split('-').first.split('+').first.trim();
 
-      final maxLength = parts1.length > parts2.length
-          ? parts1.length
-          : parts2.length;
+      final parts1 = cleanV1
+          .split('.')
+          .map((e) => int.tryParse(RegExp(r'\d+').stringMatch(e) ?? '') ?? 0)
+          .toList();
+      final parts2 = cleanV2
+          .split('.')
+          .map((e) => int.tryParse(RegExp(r'\d+').stringMatch(e) ?? '') ?? 0)
+          .toList();
+
+      final maxLength =
+          parts1.length > parts2.length ? parts1.length : parts2.length;
       for (int i = 0; i < maxLength; i++) {
         final p1 = i < parts1.length ? parts1[i] : 0;
         final p2 = i < parts2.length ? parts2[i] : 0;
