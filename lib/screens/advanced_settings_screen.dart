@@ -17,6 +17,7 @@ class AdvancedSettingsScreen extends StatelessWidget {
     BuildContext context, {
     required String title,
     String? subtitle,
+    Widget? leading,
     Widget? trailing,
     VoidCallback? onTap,
   }) {
@@ -31,15 +32,19 @@ class AdvancedSettingsScreen extends StatelessWidget {
           horizontal: 16.0,
           vertical: 4.0,
         ),
+        leading: leading != null
+            ? IconTheme(
+                data: IconThemeData(color: colorScheme.onSurfaceVariant),
+                child: leading,
+              )
+            : null,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               title,
-              style: textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+              style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 2.0),
@@ -94,6 +99,7 @@ class AdvancedSettingsScreen extends StatelessWidget {
               context,
               title: t.settings_screen.animations_title,
               subtitle: t.settings_screen.animations_subtitle,
+              leading: const Icon(Icons.auto_awesome_outlined),
               trailing: Switch(
                 value: themeProvider.enableAnimations,
                 onChanged: (bool value) {
@@ -112,33 +118,33 @@ class AdvancedSettingsScreen extends StatelessWidget {
               subtitle: ThemeColorScreen.getThemeColorName(
                 themeProvider.themeColor,
               ),
-              trailing: const Icon(Icons.chevron_right),
+              leading: const Icon(Icons.color_lens_outlined),
               onTap: () => context.push('/settings/advanced/color'),
             ),
             _buildSettingsItem(
               context,
               title: t.settings_screen.backup_title,
               subtitle: t.settings_screen.backup_subtitle,
-              trailing: const Icon(Icons.chevron_right),
+              leading: const Icon(Icons.save),
               onTap: () => context.push('/settings/advanced/backup'),
             ),
             _buildSettingsItem(
               context,
               title: t.settings_screen.restore_title,
               subtitle: t.settings_screen.restore_subtitle,
-              trailing: const Icon(Icons.chevron_right),
+              leading: const Icon(Icons.settings_backup_restore),
               onTap: () => _handleRestore(context),
             ),
             _buildSettingsItem(
               context,
               title: t.settings_screen.diagnostics_title,
               subtitle: t.settings_screen.diagnostics_subtitle,
-              trailing: const Icon(Icons.chevron_right),
+              leading: const Icon(Icons.bug_report_outlined),
               onTap: () => context.push('/settings/advanced/diagnostics'),
             ),
             const SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -222,9 +228,7 @@ class AdvancedSettingsScreen extends StatelessWidget {
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(t.settings_screen.restore_file_error),
-        ),
+        SnackBar(content: Text(t.settings_screen.restore_file_error)),
       );
     }
   }
