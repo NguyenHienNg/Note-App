@@ -1,11 +1,9 @@
-// lib/widgets/note_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import '../models/note.dart';
 import '../providers/note_provider.dart';
-import '../screens/note_detail_screen.dart';
 import '../i18n/strings.g.dart';
 
 class NoteCard extends StatelessWidget {
@@ -15,61 +13,64 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ======================== BẮT ĐẦU THAY ĐỔI ========================
     final t = Translations.of(context);
+    // Cache textTheme tránh gọi lại nhiều lần
+    final textTheme = Theme.of(context).textTheme;
+
     return Card(
-      // Thêm thuộc tính này để đảm bảo các widget con bị cắt theo góc bo
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: InkWell( // Bọc ListTile trong InkWell để quản lý hiệu ứng nhấn
-        onTap: () {
-          // Điều hướng đến màn hình chi tiết khi nhấn vào
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NoteDetailScreen(note: note),
-            ),
-          );
-        },
-        child: ListTile(
-          // Bỏ onTap ra khỏi ListTile vì InkWell đã xử lý
-          title: Text(note.title, style: Theme.of(context).textTheme.titleMedium),
-          subtitle: Text(
-            t.note_card.created_at.replaceAll('{date}', DateFormat.yMd().add_jm().format(note.createdAt)),
-            style: Theme.of(context).textTheme.bodySmall,
+      child: ListTile(
+        onTap: () => context.push('/note/${note.id}', extra: note),
+        title: Text(note.title, style: textTheme.titleMedium),
+        subtitle: Text(
+          t.note_card.created_at.replaceAll(
+            '{date}',
+            DateFormat.yMMMd(LocaleSettings.currentLocale.languageCode)
+                .add_jm()
+                .format(note.createdAt),
           ),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete_outline),
-            onPressed: () {
-              // ... (Phần code xóa không thay đổi)
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(t.note_card.delete_confirm_title),
-                  content: Text(t.note_card.delete_confirm_content),
-                  actions: <Widget>[
-                    TextButton(
-                      child:  Text(t.note_card.cancel_button),
-                      onPressed: () => Navigator.of(ctx).pop(),
-                    ),
-                    FilledButton.tonal(
-                      child:  Text(t.note_card.delete_button),
-                      onPressed: () {
-                        Provider.of<NoteProvider>(context, listen: false).deleteNote(note.id);
-                        Navigator.of(ctx).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(t.note_card.note_deleted_snackbar)),
-                        );
-                      },
-                    ),
-                  ],
+          style: textTheme.bodySmall,
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete_outline),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: 32.0,
+                  vertical: 24.0,
                 ),
-              );
-            },
-          ),
+                title: Text(t.note_card.delete_confirm_title),
+                content: SizedBox(
+                  width: double.maxFinite,
+                  child: Text(t.note_card.delete_confirm_content),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text(t.note_card.cancel_button),
+                  ),
+                  FilledButton.tonal(
+                    onPressed: () {
+                      Provider.of<NoteProvider>(context, listen: false)
+                          .deleteNote(note.id);
+                      Navigator.of(ctx).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(t.note_card.note_deleted_snackbar),
+                        ),
+                      );
+                    },
+                    child: Text(t.note_card.delete_button),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
-    // ======================== KẾT THÚC THAY ĐỔI ========================
   }
 }
