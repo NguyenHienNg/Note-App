@@ -38,8 +38,15 @@ class NoteCard extends StatelessWidget {
             showDialog(
               context: context,
               builder: (ctx) => AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: 32.0,
+                  vertical: 24.0,
+                ),
                 title: Text(t.note_card.delete_confirm_title),
-                content: Text(t.note_card.delete_confirm_content),
+                content: SizedBox(
+                  width: double.maxFinite,
+                  child: Text(t.note_card.delete_confirm_content),
+                ),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(),
