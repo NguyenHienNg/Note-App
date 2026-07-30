@@ -50,6 +50,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$note_detail_screen$en note_detail_screen = Translations$note_detail_screen$en._(_root);
 	late final Translations$settings_screen$en settings_screen = Translations$settings_screen$en._(_root);
 	late final Translations$about_app_screen$en about_app_screen = Translations$about_app_screen$en._(_root);
+	late final Translations$update_screen$en update_screen = Translations$update_screen$en._(_root);
 }
 
 // Path: home_screen
@@ -74,6 +75,9 @@ class Translations$home_screen$en {
 
 	/// en: 'Create Note'
 	String get create_note_button => 'Create Note';
+
+	/// en: 'Settings'
+	String get settings_tooltip => 'Settings';
 }
 
 // Path: note_card
@@ -185,6 +189,15 @@ class Translations$note_detail_screen$en {
 
 	/// en: 'OK'
 	String get dialog_ok_button => 'OK';
+
+	/// en: 'Save'
+	String get save_btn => 'Save';
+
+	/// en: 'Edit'
+	String get edit_btn => 'Edit';
+
+	/// en: 'Cancel Edit'
+	String get cancel_edit_btn => 'Cancel Edit';
 }
 
 // Path: settings_screen
@@ -405,11 +418,14 @@ class Translations$settings_screen$en {
 	/// en: 'Theme, Language '
 	String get tooltip_highlight => 'Theme, Language ';
 
-	/// en: 'and Advanced options right here.'
-	String get tooltip_suffix => 'and Advanced options right here.';
+	/// en: ', Language, and Advanced options right here.'
+	String get tooltip_suffix => ', Language, and Advanced options right here.';
 
 	/// en: 'Got it'
 	String get tooltip_btn_got_it => 'Got it';
+
+	/// en: 'App Update'
+	String get check_update_title => 'App Update';
 }
 
 // Path: about_app_screen
@@ -430,6 +446,96 @@ class Translations$about_app_screen$en {
 	String get copyright => '©2026 NguyenHienNg';
 }
 
+// Path: update_screen
+class Translations$update_screen$en {
+	Translations$update_screen$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Update App'
+	String get app_bar_title => 'Update App';
+
+	/// en: 'Update Channel'
+	String get channel_title => 'Update Channel';
+
+	/// en: 'Official (Stable)'
+	String get channel_stable => 'Official (Stable)';
+
+	/// en: 'Beta'
+	String get channel_beta => 'Beta';
+
+	/// en: 'Check & Update Version'
+	String get check_and_update_title => 'Check & Update Version';
+
+	/// en: 'Check for the latest updates from server'
+	String get check_and_update_subtitle => 'Check for the latest updates from server';
+
+	/// en: 'Update...'
+	String get dialog_title_checking => 'Update...';
+
+	/// en: 'Checking current version'
+	String get dialog_checking_version => 'Checking current version';
+
+	/// en: 'Connecting to server:'
+	String get dialog_connecting_server => 'Connecting to server:';
+
+	/// en: 'New version available!'
+	String get sheet_new_version_available => 'New version available!';
+
+	/// en: 'Current version'
+	String get sheet_current_version => 'Current version';
+
+	/// en: 'Latest version'
+	String get sheet_latest_version => 'Latest version';
+
+	/// en: 'What's New'
+	String get sheet_changelog_title => 'What\'s New';
+
+	/// en: 'Update Now'
+	String get sheet_update_now_btn => 'Update Now';
+
+	/// en: 'You are using latest version ({version})'
+	String get sheet_latest_already => 'You are using latest version ({version})';
+
+	/// en: 'Downloading...'
+	String get dialog_downloading_title => 'Downloading...';
+
+	/// en: 'Progress {progress}% • Network speed: {speed}'
+	String get dialog_download_progress => 'Progress {progress}% • Network speed: {speed}';
+
+	/// en: 'Installing...'
+	String get dialog_installing_title => 'Installing...';
+
+	/// en: 'Permission request failed. Cannot complete installation app'
+	String get dialog_permission_error => 'Permission request failed. Cannot complete installation app';
+
+	/// en: 'Permission Required'
+	String get permission_dialog_title => 'Permission Required';
+
+	/// en: 'To complete the app upgrade, please allow "Install unknown apps " in System Settings.'
+	String get permission_dialog_content => 'To complete the app upgrade, please allow "Install unknown apps " in System Settings.';
+
+	/// en: 'Open Settings'
+	String get permission_btn_settings => 'Open Settings';
+
+	/// en: 'Cancel'
+	String get permission_btn_cancel => 'Cancel';
+
+	/// en: 'Delete Installation File'
+	String get delete_apk_title => 'Delete Installation File';
+
+	/// en: 'Clean up downloaded APK file ({size} MB)'
+	String get delete_apk_subtitle => 'Clean up downloaded APK file ({size} MB)';
+
+	/// en: 'Installation file deleted!'
+	String get delete_apk_success => 'Installation file deleted!';
+
+	/// en: 'Failed to check for updates: {error}'
+	String get error_check_failed => 'Failed to check for updates: {error}';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -444,6 +550,7 @@ extension on Translations {
 			'home_screen.no_notes_empty_state' => 'You have no notes. Create a new one!',
 			'home_screen.no_notes_found_search' => 'No notes found matching "{searchText}"',
 			'home_screen.create_note_button' => 'Create Note',
+			'home_screen.settings_tooltip' => 'Settings',
 			'note_card.created_at' => 'Created at: {date}',
 			'note_card.delete_confirm_title' => 'Confirm Deletion',
 			'note_card.delete_confirm_content' => 'Are you sure you want to delete this note?',
@@ -472,6 +579,9 @@ extension on Translations {
 			'note_detail_screen.dialog_cancel_button' => 'Cancel',
 			'note_detail_screen.dialog_discard_button' => 'Don\'t Save',
 			'note_detail_screen.dialog_ok_button' => 'OK',
+			'note_detail_screen.save_btn' => 'Save',
+			'note_detail_screen.edit_btn' => 'Edit',
+			'note_detail_screen.cancel_edit_btn' => 'Cancel Edit',
 			'settings_screen.app_bar_title' => 'Settings',
 			'settings_screen.section_appearance' => 'Appearance',
 			'settings_screen.theme_title' => 'Theme',
@@ -542,11 +652,39 @@ extension on Translations {
 			'settings_screen.tooltip_title' => 'Tips',
 			'settings_screen.tooltip_prefix' => 'You can customize ',
 			'settings_screen.tooltip_highlight' => 'Theme, Language ',
-			'settings_screen.tooltip_suffix' => 'and Advanced options right here.',
+			'settings_screen.tooltip_suffix' => ', Language, and Advanced options right here.',
 			'settings_screen.tooltip_btn_got_it' => 'Got it',
+			'settings_screen.check_update_title' => 'App Update',
 			'about_app_screen.app_bar_title' => 'About App',
 			'about_app_screen.app_name_fallback' => 'Notes',
 			'about_app_screen.copyright' => '©2026 NguyenHienNg',
+			'update_screen.app_bar_title' => 'Update App',
+			'update_screen.channel_title' => 'Update Channel',
+			'update_screen.channel_stable' => 'Official (Stable)',
+			'update_screen.channel_beta' => 'Beta',
+			'update_screen.check_and_update_title' => 'Check & Update Version',
+			'update_screen.check_and_update_subtitle' => 'Check for the latest updates from server',
+			'update_screen.dialog_title_checking' => 'Update...',
+			'update_screen.dialog_checking_version' => 'Checking current version',
+			'update_screen.dialog_connecting_server' => 'Connecting to server:',
+			'update_screen.sheet_new_version_available' => 'New version available!',
+			'update_screen.sheet_current_version' => 'Current version',
+			'update_screen.sheet_latest_version' => 'Latest version',
+			'update_screen.sheet_changelog_title' => 'What\'s New',
+			'update_screen.sheet_update_now_btn' => 'Update Now',
+			'update_screen.sheet_latest_already' => 'You are using latest version ({version})',
+			'update_screen.dialog_downloading_title' => 'Downloading...',
+			'update_screen.dialog_download_progress' => 'Progress {progress}% • Network speed: {speed}',
+			'update_screen.dialog_installing_title' => 'Installing...',
+			'update_screen.dialog_permission_error' => 'Permission request failed. Cannot complete installation app',
+			'update_screen.permission_dialog_title' => 'Permission Required',
+			'update_screen.permission_dialog_content' => 'To complete the app upgrade, please allow "Install unknown apps " in System Settings.',
+			'update_screen.permission_btn_settings' => 'Open Settings',
+			'update_screen.permission_btn_cancel' => 'Cancel',
+			'update_screen.delete_apk_title' => 'Delete Installation File',
+			'update_screen.delete_apk_subtitle' => 'Clean up downloaded APK file ({size} MB)',
+			'update_screen.delete_apk_success' => 'Installation file deleted!',
+			'update_screen.error_check_failed' => 'Failed to check for updates: {error}',
 			_ => null,
 		};
 	}

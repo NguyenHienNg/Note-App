@@ -44,6 +44,7 @@ class TranslationsVi with BaseTranslations<AppLocale, Translations> implements T
 	@override late final _Translations$note_detail_screen$vi note_detail_screen = _Translations$note_detail_screen$vi._(_root);
 	@override late final _Translations$settings_screen$vi settings_screen = _Translations$settings_screen$vi._(_root);
 	@override late final _Translations$about_app_screen$vi about_app_screen = _Translations$about_app_screen$vi._(_root);
+	@override late final _Translations$update_screen$vi update_screen = _Translations$update_screen$vi._(_root);
 }
 
 // Path: home_screen
@@ -58,6 +59,7 @@ class _Translations$home_screen$vi implements Translations$home_screen$en {
 	@override String get no_notes_empty_state => 'Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!';
 	@override String get no_notes_found_search => 'Không tìm thấy ghi chú nào phù hợp với "{searchText}"';
 	@override String get create_note_button => 'Tạo ghi chú';
+	@override String get settings_tooltip => 'Cài đặt';
 }
 
 // Path: note_card
@@ -113,6 +115,9 @@ class _Translations$note_detail_screen$vi implements Translations$note_detail_sc
 	@override String get dialog_cancel_button => 'Hủy';
 	@override String get dialog_discard_button => 'Không lưu';
 	@override String get dialog_ok_button => 'OK';
+	@override String get save_btn => 'Lưu';
+	@override String get edit_btn => 'Chỉnh sửa';
+	@override String get cancel_edit_btn => 'Hủy chỉnh sửa';
 }
 
 // Path: settings_screen
@@ -194,6 +199,7 @@ class _Translations$settings_screen$vi implements Translations$settings_screen$e
 	@override String get tooltip_highlight => 'Chủ đề, Ngôn ngữ ';
 	@override String get tooltip_suffix => 'và các cài đặt Nâng cao ngay tại đây.';
 	@override String get tooltip_btn_got_it => 'Đã hiểu';
+	@override String get check_update_title => 'Cập nhật ứng dụng';
 }
 
 // Path: about_app_screen
@@ -206,6 +212,42 @@ class _Translations$about_app_screen$vi implements Translations$about_app_screen
 	@override String get app_bar_title => 'Về ứng dụng';
 	@override String get app_name_fallback => 'Notes (Ghi chú)';
 	@override String get copyright => '©2026 NguyenHienNg';
+}
+
+// Path: update_screen
+class _Translations$update_screen$vi implements Translations$update_screen$en {
+	_Translations$update_screen$vi._(this._root);
+
+	final TranslationsVi _root; // ignore: unused_field
+
+	// Translations
+	@override String get app_bar_title => 'Cập nhật ứng dụng';
+	@override String get channel_title => 'Kênh phiên bản';
+	@override String get channel_stable => 'Chính thức';
+	@override String get channel_beta => 'Thử nghiệm (Beta)';
+	@override String get check_and_update_title => 'Kiểm tra & Cập nhật phiên bản';
+	@override String get check_and_update_subtitle => 'Kiểm tra bản cập nhật mới nhất từ máy chủ';
+	@override String get dialog_title_checking => 'Cập nhật...';
+	@override String get dialog_checking_version => 'Đang kiểm tra phiên bản hiện tại:';
+	@override String get dialog_connecting_server => 'Đang kết nối tới máy chủ:';
+	@override String get sheet_new_version_available => 'Đã có phiên bản mới!';
+	@override String get sheet_current_version => 'Phiên bản hiện tại';
+	@override String get sheet_latest_version => 'Phiên bản mới nhất';
+	@override String get sheet_changelog_title => 'Nhật ký thay đổi';
+	@override String get sheet_update_now_btn => 'Cập nhật ngay';
+	@override String get sheet_latest_already => 'Bạn ở phiên bản mới nhất ({version})';
+	@override String get dialog_downloading_title => 'Đang tải về...';
+	@override String get dialog_download_progress => 'Tiến trình {progress}% • Tốc độ mạng: {speed}';
+	@override String get dialog_installing_title => 'Đang cài đặt...';
+	@override String get dialog_permission_error => 'Yêu cầu quyền thất bại. Không thể hoàn tất cài đặt ứng dụng';
+	@override String get permission_dialog_title => 'Cần cấp quyền cài đặt';
+	@override String get permission_dialog_content => 'Để hoàn tất nâng cấp ứng dụng, bạn cần cấp quyền "Cài đặt ứng dụng không xác định" trong Cài đặt hệ thống.';
+	@override String get permission_btn_settings => 'Mở Cài đặt';
+	@override String get permission_btn_cancel => 'Hủy';
+	@override String get delete_apk_title => 'Xóa file cài đặt';
+	@override String get delete_apk_subtitle => 'Dọn dẹp file APK đã tải về ({size} MB)';
+	@override String get delete_apk_success => 'Đã xóa file cài đặt!';
+	@override String get error_check_failed => 'Không thể kiểm tra cập nhật: {error}';
 }
 
 /// The flat map containing all translations for locale <vi>.
@@ -222,6 +264,7 @@ extension on TranslationsVi {
 			'home_screen.no_notes_empty_state' => 'Bạn không có ghi chú nào. Hãy tạo một ghi chú mới!',
 			'home_screen.no_notes_found_search' => 'Không tìm thấy ghi chú nào phù hợp với "{searchText}"',
 			'home_screen.create_note_button' => 'Tạo ghi chú',
+			'home_screen.settings_tooltip' => 'Cài đặt',
 			'note_card.created_at' => 'Tạo lúc: {date}',
 			'note_card.delete_confirm_title' => 'Xác nhận xóa',
 			'note_card.delete_confirm_content' => 'Bạn có chắc chắn muốn xóa ghi chú này không?',
@@ -250,6 +293,9 @@ extension on TranslationsVi {
 			'note_detail_screen.dialog_cancel_button' => 'Hủy',
 			'note_detail_screen.dialog_discard_button' => 'Không lưu',
 			'note_detail_screen.dialog_ok_button' => 'OK',
+			'note_detail_screen.save_btn' => 'Lưu',
+			'note_detail_screen.edit_btn' => 'Chỉnh sửa',
+			'note_detail_screen.cancel_edit_btn' => 'Hủy chỉnh sửa',
 			'settings_screen.app_bar_title' => 'Cài đặt',
 			'settings_screen.section_appearance' => 'Giao diện',
 			'settings_screen.theme_title' => 'Chủ đề',
@@ -322,9 +368,37 @@ extension on TranslationsVi {
 			'settings_screen.tooltip_highlight' => 'Chủ đề, Ngôn ngữ ',
 			'settings_screen.tooltip_suffix' => 'và các cài đặt Nâng cao ngay tại đây.',
 			'settings_screen.tooltip_btn_got_it' => 'Đã hiểu',
+			'settings_screen.check_update_title' => 'Cập nhật ứng dụng',
 			'about_app_screen.app_bar_title' => 'Về ứng dụng',
 			'about_app_screen.app_name_fallback' => 'Notes (Ghi chú)',
 			'about_app_screen.copyright' => '©2026 NguyenHienNg',
+			'update_screen.app_bar_title' => 'Cập nhật ứng dụng',
+			'update_screen.channel_title' => 'Kênh phiên bản',
+			'update_screen.channel_stable' => 'Chính thức',
+			'update_screen.channel_beta' => 'Thử nghiệm (Beta)',
+			'update_screen.check_and_update_title' => 'Kiểm tra & Cập nhật phiên bản',
+			'update_screen.check_and_update_subtitle' => 'Kiểm tra bản cập nhật mới nhất từ máy chủ',
+			'update_screen.dialog_title_checking' => 'Cập nhật...',
+			'update_screen.dialog_checking_version' => 'Đang kiểm tra phiên bản hiện tại:',
+			'update_screen.dialog_connecting_server' => 'Đang kết nối tới máy chủ:',
+			'update_screen.sheet_new_version_available' => 'Đã có phiên bản mới!',
+			'update_screen.sheet_current_version' => 'Phiên bản hiện tại',
+			'update_screen.sheet_latest_version' => 'Phiên bản mới nhất',
+			'update_screen.sheet_changelog_title' => 'Nhật ký thay đổi',
+			'update_screen.sheet_update_now_btn' => 'Cập nhật ngay',
+			'update_screen.sheet_latest_already' => 'Bạn ở phiên bản mới nhất ({version})',
+			'update_screen.dialog_downloading_title' => 'Đang tải về...',
+			'update_screen.dialog_download_progress' => 'Tiến trình {progress}% • Tốc độ mạng: {speed}',
+			'update_screen.dialog_installing_title' => 'Đang cài đặt...',
+			'update_screen.dialog_permission_error' => 'Yêu cầu quyền thất bại. Không thể hoàn tất cài đặt ứng dụng',
+			'update_screen.permission_dialog_title' => 'Cần cấp quyền cài đặt',
+			'update_screen.permission_dialog_content' => 'Để hoàn tất nâng cấp ứng dụng, bạn cần cấp quyền "Cài đặt ứng dụng không xác định" trong Cài đặt hệ thống.',
+			'update_screen.permission_btn_settings' => 'Mở Cài đặt',
+			'update_screen.permission_btn_cancel' => 'Hủy',
+			'update_screen.delete_apk_title' => 'Xóa file cài đặt',
+			'update_screen.delete_apk_subtitle' => 'Dọn dẹp file APK đã tải về ({size} MB)',
+			'update_screen.delete_apk_success' => 'Đã xóa file cài đặt!',
+			'update_screen.error_check_failed' => 'Không thể kiểm tra cập nhật: {error}',
 			_ => null,
 		};
 	}
