@@ -62,11 +62,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _launchUrl(Uri url, BuildContext context) async {
     if (!await launchUrl(url)) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Cannot open link: $url'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Cannot open link: $url')));
     }
   }
 
@@ -163,10 +161,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     BuildContext context, {
     required String title,
     String? subtitle,
+    Widget? leading,
     Widget? trailing,
     VoidCallback? onTap,
   }) {
-    // FIX: Cache theme một lần thay vì gọi Theme.of(context) 3-4 lần
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
@@ -178,15 +176,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           horizontal: 16.0,
           vertical: 4.0,
         ),
+        leading: leading != null
+            ? IconTheme(
+                data: IconThemeData(color: colorScheme.onSurfaceVariant),
+                child: leading,
+              )
+            : null,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               title,
-              style: textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+              style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 2.0),
@@ -320,9 +322,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: colorScheme.primary,
                         ),
                       ),
-                      TextSpan(
-                        text: t.settings_screen.tooltip_suffix,
-                      ),
+                      TextSpan(text: t.settings_screen.tooltip_suffix),
                     ],
                   ),
                 ),
@@ -360,12 +360,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               context,
               title: t.settings_screen.theme_title,
               subtitle: _getThemeModeName(themeProvider.themeMode),
+              leading: const Icon(Icons.contrast),
               onTap: () => _showThemeSelectionSheet(context, themeProvider),
             ),
             _buildSettingsItem(
               context,
               title: t.settings_screen.language_title,
               subtitle: _getLanguageName(_selectedLanguageCode),
+              leading: const Icon(Icons.language_outlined),
               onTap: () => _showLanguageSelectionSheet(context),
             ),
             const Divider(height: 0, thickness: 1.5),
@@ -376,16 +378,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               context,
               title: t.settings_screen.view_source_title,
               subtitle: t.settings_screen.view_source_subtitle,
+              leading: const Icon(Icons.code_outlined),
               onTap: () => _launchUrl(_githubUrl, context),
             ),
             _buildSettingsItem(
               context,
+              title: t.settings_screen.check_update_title,
+              leading: const Icon(Icons.update),
+              onTap: () => context.push('/settings/update'),
+            ),
+            _buildSettingsItem(
+              context,
               title: t.settings_screen.about_app_title,
+              leading: const Icon(Icons.info_outline),
               onTap: () => context.push('/settings/about'),
             ),
             _buildSettingsItem(
               context,
               title: t.settings_screen.section_advanced,
+              leading: const Icon(Icons.tune_outlined),
               trailing: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
