@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/note_provider.dart';
@@ -49,9 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: InputDecoration(
                   hintText: t.home_screen.search_hint,
                   border: InputBorder.none,
-                  hintStyle: TextStyle(
-                    color: onSurface.withValues(alpha: 0.5),
-                  ),
+                  hintStyle: TextStyle(color: onSurface.withValues(alpha: 0.5)),
                 ),
                 style: TextStyle(color: onSurface, fontSize: 18),
                 onChanged: (_) {},
@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.settings),
+            tooltip: t.home_screen.settings_tooltip,
             onPressed: () => context.push('/settings'),
           ),
         ],
@@ -88,18 +89,35 @@ class _HomeScreenState extends State<HomeScreen> {
           final filteredNotes = _searchText.isEmpty
               ? noteProvider.notes
               : noteProvider.notes.where((note) {
-                  return note.title
-                      .toLowerCase()
-                      .contains(_searchText.toLowerCase());
+                  final query = _searchText.toLowerCase();
+                  return note.title.toLowerCase().contains(query) ||
+                         note.content.toLowerCase().contains(query);
                 }).toList();
 
           if (filteredNotes.isEmpty) {
             return Center(
-              child: Text(
-                _searchText.isEmpty
-                    ? t.home_screen.no_notes_empty_state
-                    : t.home_screen.no_notes_found_search
-                        .replaceAll('{searchText}', _searchText),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icon/undraw_starry-window_yiga.svg',
+                      height: 240,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      _searchText.isEmpty
+                          ? t.home_screen.no_notes_empty_state
+                          : t.home_screen.no_notes_found_search.replaceAll(
+                              '{searchText}',
+                              _searchText,
+                            ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 80),
+                  ],
+                ),
               ),
             );
           }
