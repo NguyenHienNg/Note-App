@@ -5,7 +5,8 @@
     "search_hint": "Search notes...",
     "no_notes_empty_state": "You have no notes. Create a new one!",
     "no_notes_found_search": "No notes found matching \"{searchText}\"",
-    "create_note_button": "Create Note"
+    "create_note_button": "Create Note",
+    "settings_tooltip": "Settings"
   },
   "note_card": {
     "created_at": "Created at: {date}",
@@ -39,7 +40,10 @@
     "dialog_content_exit_confirm": "Are you sure you want to save these changes?",
     "dialog_cancel_button": "Cancel",
     "dialog_discard_button": "Don't Save",
-    "dialog_ok_button": "OK"
+    "dialog_ok_button": "OK",
+    "save_btn": "Save",
+    "edit_btn": "Edit",
+    "cancel_edit_btn": "Cancel Edit"
   },
   "settings_screen": {
     "app_bar_title": "Settings",
@@ -112,12 +116,42 @@
     "tooltip_title": "Tips",
     "tooltip_prefix": "You can customize ",
     "tooltip_highlight": "Theme, Language ",
-    "tooltip_suffix": "and Advanced options right here.",
-    "tooltip_btn_got_it": "Got it"
+    "tooltip_suffix": ", Language, and Advanced options right here.",
+    "tooltip_btn_got_it": "Got it",
+    "check_update_title": "App Update"
   },
   "about_app_screen": {
     "app_bar_title": "About App",
     "app_name_fallback": "Notes",
     "copyright": "©2026 NguyenHienNg"
+  },
+  "update_screen": {
+    "app_bar_title": "Update App",
+    "channel_title": "Update Channel",
+    "channel_stable": "Official (Stable)",
+    "channel_beta": "Beta",
+    "check_and_update_title": "Check & Update Version",
+    "check_and_update_subtitle": "Check for the latest updates from server",
+    "dialog_title_checking": "Update...",
+    "dialog_checking_version": "Checking current version",
+    "dialog_connecting_server": "Connecting to server:",
+    "sheet_new_version_available": "New version available!",
+    "sheet_current_version": "Current version",
+    "sheet_latest_version": "Latest version",
+    "sheet_changelog_title": "What's New",
+    "sheet_update_now_btn": "Update Now",
+    "sheet_latest_already": "You are using latest version ({version})",
+    "dialog_downloading_title": "Downloading...",
+    "dialog_download_progress": "Progress {progress}% • Network speed: {speed}",
+    "dialog_installing_title": "Installing...",
+    "dialog_permission_error": "Permission request failed. Cannot complete installation app",
+    "permission_dialog_title": "Permission Required",
+    "permission_dialog_content": "To complete the app upgrade, please allow \"Install unknown apps \" in System Settings.",
+    "permission_btn_settings": "Open Settings",
+    "permission_btn_cancel": "Cancel",
+    "delete_apk_title": "Delete Installation File",
+    "delete_apk_subtitle": "Clean up downloaded APK file ({size} MB)",
+    "delete_apk_success": "Installation file deleted!",
+    "error_check_failed": "Failed to check for updates: {error}"
   }
 }
