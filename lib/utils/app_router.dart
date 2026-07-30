@@ -5,6 +5,7 @@ import '../screens/home_screen.dart';
 import '../screens/note_detail_screen.dart';
 import '../screens/settings.dart';
 import '../screens/about_app_screen.dart';
+import '../screens/update_screen.dart';
 import '../screens/advanced_settings_screen.dart';
 import '../screens/theme_color_screen.dart';
 import '../screens/backup_screen.dart';
@@ -84,6 +85,14 @@ final appRouter = GoRouter(
                 context: context,
                 state: state,
                 child: const AboutAppScreen(),
+              ),
+            ),
+            GoRoute(
+              path: 'update',
+              pageBuilder: (context, state) => _buildTransition(
+                context: context,
+                state: state,
+                child: const UpdateScreen(),
               ),
             ),
             GoRoute(
