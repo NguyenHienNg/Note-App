@@ -19,7 +19,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   late TextEditingController _titleController;
   late TextEditingController _contentController;
   bool _isEditing = false;
-  bool _hasChanges = false;
+  final ValueNotifier<bool> _hasChanges = ValueNotifier<bool>(false);
   bool _isLoadingEditMode = false;
 
   String _originalTitle = '';
@@ -61,12 +61,11 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
 
   void _checkForChanges() {
     if (_isEditing) {
-      final changed = (_titleController.text.trim() != _originalTitle.trim() ||
+      final changed =
+          (_titleController.text.trim() != _originalTitle.trim() ||
           _contentController.text.trim() != _originalContent.trim());
-      if (_hasChanges != changed) {
-        setState(() {
-          _hasChanges = changed;
-        });
+      if (_hasChanges.value != changed) {
+        _hasChanges.value = changed;
       }
     }
   }
@@ -77,13 +76,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
     if (_titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Row(
-            children: [
-              const Icon(Icons.error_outline),
-              const SizedBox(width: 8),
-              Text(t.note_detail_screen.title_empty_error_snackbar),
-            ],
-          ),
+          content: Text(t.note_detail_screen.title_empty_error_snackbar),
           duration: const Duration(seconds: 3),
         ),
       );
@@ -109,122 +102,96 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   void _discardChanges() {
     setState(() {
       _isEditing = false;
-      _hasChanges = false;
       _isLoadingEditMode = false;
       _titleController.text = _originalTitle;
       _contentController.text = _originalContent;
     });
+    _hasChanges.value = false;
+  }
+
+  Future<bool> _showConfirmationDialog(String contentText) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (BuildContext dialogContext) {
+            bool dialogIsSaving = false;
+            return StatefulBuilder(
+              builder: (context, setStateDialog) {
+                return AlertDialog(
+                  insetPadding: const EdgeInsets.symmetric(
+                    horizontal: 32.0,
+                    vertical: 24.0,
+                  ),
+                  title: Text(t.note_detail_screen.dialog_title),
+                  content: SizedBox(
+                    width: double.maxFinite,
+                    child: Text(contentText),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: dialogIsSaving
+                          ? null
+                          : () => Navigator.of(dialogContext).pop(false),
+                      child: Text(t.note_detail_screen.dialog_cancel_button),
+                    ),
+                    FilledButton.tonal(
+                      onPressed: dialogIsSaving
+                          ? null
+                          : () {
+                              _discardChanges();
+                              Navigator.of(dialogContext).pop(true);
+                            },
+                      child: Text(t.note_detail_screen.dialog_discard_button),
+                    ),
+                    ElevatedButton(
+                      onPressed: dialogIsSaving
+                          ? null
+                          : () async {
+                              setStateDialog(() => dialogIsSaving = true);
+                              await Future.delayed(
+                                const Duration(milliseconds: 550),
+                              );
+                              final saveSuccess = await _saveChangesLogic();
+                              if (!dialogContext.mounted) return;
+                              Navigator.of(dialogContext).pop(saveSuccess);
+                              if (saveSuccess) {
+                                setState(() {
+                                  _isEditing = false;
+                                  _isLoadingEditMode = false;
+                                  _originalTitle = _titleController.text.trim();
+                                  _originalContent = _contentController.text
+                                      .trim();
+                                });
+                                _hasChanges.value = false;
+                              }
+                            },
+                      child: dialogIsSaving
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(t.note_detail_screen.dialog_ok_button),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ) ??
+        false;
   }
 
   Future<bool> _showSaveConfirmationDialog() async {
-    return await showDialog<bool>(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        bool dialogIsSaving = false;
-        return StatefulBuilder(
-          builder: (context, setStateDialog) {
-            return AlertDialog(
-              title: Text(t.note_detail_screen.dialog_title),
-              content: Text(t.note_detail_screen.dialog_content_save_confirm),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: dialogIsSaving ? null : () => Navigator.of(dialogContext).pop(false),
-                  child: Text(t.note_detail_screen.dialog_cancel_button),
-                ),
-                FilledButton.tonal(
-                  onPressed: dialogIsSaving
-                      ? null
-                      : () {
-                          _discardChanges();
-                          Navigator.of(dialogContext).pop(true);
-                        },
-                  child: Text(t.note_detail_screen.dialog_discard_button),
-                ),
-                ElevatedButton(
-                  onPressed: dialogIsSaving
-                      ? null
-                      : () async {
-                          setStateDialog(() => dialogIsSaving = true);
-                          await Future.delayed(const Duration(milliseconds: 550));
-                          final saveSuccess = await _saveChangesLogic();
-                          if (!dialogContext.mounted) return;
-                          Navigator.of(dialogContext).pop(saveSuccess);
-                          if (saveSuccess) {
-                            setState(() {
-                              _isEditing = false;
-                              _hasChanges = false;
-                              _isLoadingEditMode = false;
-                              _originalTitle = _titleController.text.trim();
-                              _originalContent = _contentController.text.trim();
-                            });
-                          }
-                        },
-                  child: dialogIsSaving
-                      ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                      : Text(t.note_detail_screen.dialog_ok_button),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    ) ?? false;
+    return _showConfirmationDialog(
+      t.note_detail_screen.dialog_content_save_confirm,
+    );
   }
 
   Future<bool> _showExitConfirmationDialog() async {
-    if (_isEditing && _hasChanges) {
-      return await showDialog<bool>(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          bool dialogIsSaving = false;
-          return StatefulBuilder(
-            builder: (context, setStateDialog) {
-              return AlertDialog(
-                title: Text(t.note_detail_screen.dialog_title),
-                content: Text(t.note_detail_screen.dialog_content_exit_confirm),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: dialogIsSaving ? null : () => Navigator.of(dialogContext).pop(false),
-                    child: Text(t.note_detail_screen.dialog_cancel_button),
-                  ),
-                  FilledButton.tonal(
-                    onPressed: dialogIsSaving
-                        ? null
-                        : () {
-                            _discardChanges();
-                            Navigator.of(dialogContext).pop(true);
-                          },
-                    child: Text(t.note_detail_screen.dialog_discard_button),
-                  ),
-                  ElevatedButton(
-                    onPressed: dialogIsSaving
-                        ? null
-                        : () async {
-                            setStateDialog(() => dialogIsSaving = true);
-                            await Future.delayed(const Duration(milliseconds: 550));
-                            final saveSuccess = await _saveChangesLogic();
-                            if (!dialogContext.mounted) return;
-                            Navigator.of(dialogContext).pop(saveSuccess);
-                            if (saveSuccess) {
-                              setState(() {
-                                _isEditing = false;
-                                _hasChanges = false;
-                                _isLoadingEditMode = false;
-                                _originalTitle = _titleController.text.trim();
-                                _originalContent = _contentController.text.trim();
-                              });
-                            }
-                          },
-                    child: dialogIsSaving
-                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                        : Text(t.note_detail_screen.dialog_ok_button),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ) ?? false;
+    if (_isEditing && _hasChanges.value) {
+      return _showConfirmationDialog(
+        t.note_detail_screen.dialog_content_exit_confirm,
+      );
     }
     return true;
   }
@@ -270,111 +237,156 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
               if (shouldPop) router.pop();
             },
           ),
-          title: _isEditing ? Text(t.note_detail_screen.edit_note_title) : const Text(''),
+          title: _isEditing
+              ? Text(t.note_detail_screen.edit_note_title)
+              : const Text(''),
           actions: [
-            IconButton(
-              icon: _isEditing
-                  ? (_hasChanges ? const Icon(Icons.check) : const Icon(Icons.close))
-                  : const Icon(Icons.edit),
-              onPressed: () async {
-                if (_isEditing) {
-                  if (_hasChanges) {
-                    await _showSaveConfirmationDialog();
-                  } else {
-                    _discardChanges();
-                  }
-                } else {
-                  setState(() => _isLoadingEditMode = true);
-                  await Future.delayed(const Duration(milliseconds: 250));
-                  setState(() {
-                    _isLoadingEditMode = false;
-                    _isEditing = true;
-                    _hasChanges = false;
-                    _originalTitle = _titleController.text;
-                    _originalContent = _contentController.text;
-                  });
-                }
+            ValueListenableBuilder<bool>(
+              valueListenable: _hasChanges,
+              builder: (context, hasChangesValue, child) {
+                return IconButton(
+                  icon: _isEditing
+                      ? (hasChangesValue
+                            ? const Icon(Icons.save)
+                            : const Icon(Icons.edit_off))
+                      : const Icon(Icons.edit),
+                  tooltip: _isEditing
+                      ? (hasChangesValue
+                          ? t.note_detail_screen.save_btn
+                          : t.note_detail_screen.cancel_edit_btn)
+                      : t.note_detail_screen.edit_btn,
+                  onPressed: () async {
+                    if (_isEditing) {
+                      if (hasChangesValue) {
+                        await _showSaveConfirmationDialog();
+                      } else {
+                        _discardChanges();
+                      }
+                    } else {
+                      setState(() => _isLoadingEditMode = true);
+                      await Future.delayed(const Duration(milliseconds: 250));
+                      setState(() {
+                        _isLoadingEditMode = false;
+                        _isEditing = true;
+                        _originalTitle = _titleController.text;
+                        _originalContent = _contentController.text;
+                      });
+                      _hasChanges.value = false;
+                    }
+                  },
+                );
               },
             ),
           ],
         ),
-        body: _isLoadingEditMode
-            ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _isEditing
-                        ? TextField(
-                            controller: _titleController,
-                            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                            decoration: InputDecoration(
-                              labelText: t.note_detail_screen.title_label,
-                              hintText: t.note_detail_screen.title_hint,
-                              border: OutlineInputBorder(),
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        body: SafeArea(
+          child: _isLoadingEditMode
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _isEditing
+                          ? TextField(
+                              controller: _titleController,
+                              style: textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: t.note_detail_screen.title_label,
+                                hintText: t.note_detail_screen.title_hint,
+                                border: const OutlineInputBorder(),
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                              ),
+                              minLines: 1,
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                            )
+                          : Text(
+                              currentNote.title,
+                              style: textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: null,
                             ),
-                            minLines: 1,
-                            maxLines: null,
-                            keyboardType: TextInputType.multiline,
-                          )
-                        : Text(
-                            currentNote.title,
-                            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                            maxLines: null,
+                      const SizedBox(height: 8),
+                      if (!_isEditing)
+                        Text(
+                          t.note_card.created_at.replaceAll(
+                            '{date}',
+                            DateFormat.yMMMd(
+                              LocaleSettings.currentLocale.languageCode,
+                            ).add_jm().format(currentNote.createdAt),
                           ),
-                    const SizedBox(height: 8),
-                    if (!_isEditing)
-                      Text(
-                        t.note_card.created_at.replaceAll(
-                          '{date}',
-                          DateFormat.yMMMd(LocaleSettings.currentLocale.languageCode)
-                              .add_jm()
-                              .format(currentNote.createdAt),
+                          style: textTheme.bodySmall,
                         ),
-                        style: textTheme.bodySmall,
+                      const Divider(height: 32, thickness: 1.0),
+                      Text(
+                        t.note_detail_screen.content_label,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    const Divider(height: 32, thickness: 1.0),
-                    Text(
-                      t.note_detail_screen.content_label,
-                      style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    _isEditing
-                        ? TextField(
-                            controller: _contentController,
-                            style: textTheme.bodyLarge?.copyWith(height: 1.5),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: t.note_detail_screen.content_hint,
-                            ),
-                            maxLines: null,
-                            minLines: 8,
-                            keyboardType: TextInputType.multiline,
-                          )
-                        : (currentNote.content.trim().isEmpty
-                            ? Column(
-                                children: [
-                                  const SizedBox(height: 200.0),
-                                  Center(
-                                    child: Text(
-                                      t.note_detail_screen.no_content_placeholder,
-                                      style: textTheme.bodyLarge?.copyWith(
-                                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: _isEditing
+                            ? TextField(
+                                controller: _contentController,
+                                style: textTheme.bodyLarge?.copyWith(
+                                  height: 1.5,
+                                ),
+                                decoration: InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  hintText: t.note_detail_screen.content_hint,
+                                ),
+                                maxLines: null,
+                                expands: true,
+                                textAlignVertical: TextAlignVertical.top,
+                                keyboardType: TextInputType.multiline,
                               )
-                            : Text(
-                                currentNote.content,
-                                style: textTheme.bodyLarge?.copyWith(height: 1.5),
-                              )),
-                  ],
+                            : SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: currentNote.content.trim().isEmpty
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(
+                                          top: 100.0,
+                                        ),
+                                        child: Text(
+                                          t
+                                              .note_detail_screen
+                                              .no_content_placeholder,
+                                          style: textTheme.bodyLarge?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.5),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(
+                                          bottom: 40.0,
+                                        ),
+                                        child: Text(
+                                          currentNote.content,
+                                          style: textTheme.bodyLarge?.copyWith(
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }
