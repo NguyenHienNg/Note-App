@@ -130,7 +130,7 @@ class _BackupScreenState extends State<BackupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
-                      'assets/icon/undraw_question-answered_ezyn.svg',
+                      'assets/icon/undraw_relaxed-reading_wfkr.svg',
                       height: 180,
                     ),
                     const SizedBox(height: 24),
