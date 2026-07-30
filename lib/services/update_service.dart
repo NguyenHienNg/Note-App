@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -66,11 +67,36 @@ class UpdateService {
     await prefs.setString(channelKey, channel);
   }
 
+  /// Đọc chuỗi version gốc từ pubspec.yaml asset
+  Future<String> _readPubspecVersion() async {
+    try {
+      final content = await rootBundle.loadString('pubspec.yaml');
+      final line = content
+          .split('\n')
+          .firstWhere((l) => l.trim().startsWith('version:'), orElse: () => '');
+      if (line.isNotEmpty) {
+        return line.split(':').last.trim();
+      }
+    } catch (_) {}
+    return '';
+  }
+
   /// Kiểm tra bản cập nhật mới từ Cloudflare Worker API
   Future<UpdateInfo> checkUpdate() async {
+    // Đọc version gốc từ pubspec.yaml để biết chính xác có +N hay không
+    final pubspecVersion = await _readPubspecVersion();
     final packageInfo = await PackageInfo.fromPlatform();
     final currentVersion = packageInfo.version;
-    final currentBuildNumber = int.tryParse(packageInfo.buildNumber) ?? 1;
+
+    // Nếu pubspec không có dấu +, build number thực tế = 0
+    // (Android mặc định trả buildNumber=1 dù pubspec không ghi +N)
+    final int currentBuildNumber;
+    if (pubspecVersion.contains('+')) {
+      final buildStr = pubspecVersion.split('+').last.split('-').first.trim();
+      currentBuildNumber = int.tryParse(buildStr) ?? 0;
+    } else {
+      currentBuildNumber = 0;
+    }
 
     final channel = await getUpdateChannel();
     final response = await http
@@ -87,7 +113,7 @@ class UpdateService {
     final data =
         jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     final latestVersionRaw = (data['latest_version'] as String? ?? '').trim();
-    final buildNumber = (data['build_number'] as int?) ?? 1;
+    final buildNumber = (data['build_number'] as int?) ?? 0;
     final downloadUrl = data['download_url'] as String? ?? '';
     final releaseDate = data['release_date'] as String? ?? '';
     final changelog = (data['changelog'] as Map<String, dynamic>?) ?? {};
@@ -99,7 +125,7 @@ class UpdateService {
         currentVersion.split('-').first.split('+').first.trim();
 
     final isLatestPreRelease = latestVersionRaw.contains('-');
-    final isCurrentPreRelease = currentVersion.contains('-');
+    final isCurrentPreRelease = pubspecVersion.contains('-');
 
     bool hasUpdate = false;
     if (_isVersionNewer(latestVersionClean, currentVersionClean)) {
