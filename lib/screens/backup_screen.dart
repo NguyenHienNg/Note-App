@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
@@ -36,8 +37,9 @@ class _BackupScreenState extends State<BackupScreen> {
 
   Future<void> _exportBackup() async {
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
-    final selectedNotes =
-        noteProvider.notes.where((n) => _selectedIds.contains(n.id)).toList();
+    final selectedNotes = noteProvider.notes
+        .where((n) => _selectedIds.contains(n.id))
+        .toList();
 
     if (selectedNotes.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,8 +53,9 @@ class _BackupScreenState extends State<BackupScreen> {
     try {
       if (selectedNotes.length == 1) {
         // Xuất file .json đơn
-        final jsonStr =
-            const JsonEncoder.withIndent('  ').convert(selectedNotes[0].toMap());
+        final jsonStr = const JsonEncoder.withIndent(
+          '  ',
+        ).convert(selectedNotes[0].toMap());
         final bytes = Uint8List.fromList(utf8.encode(jsonStr));
 
         final result = await FilePicker.saveFile(
@@ -70,17 +73,16 @@ class _BackupScreenState extends State<BackupScreen> {
         // Xuất file .zip
         final archive = Archive();
         for (final note in selectedNotes) {
-          final jsonStr =
-              const JsonEncoder.withIndent('  ').convert(note.toMap());
+          final jsonStr = const JsonEncoder.withIndent(
+            '  ',
+          ).convert(note.toMap());
           final bytes = utf8.encode(jsonStr);
           // Tên file: title sanitized + id suffix để tránh trùng
           final safeTitle = note.title
               .replaceAll(RegExp(r'[<>:"/\\|?*]'), '_')
               .replaceAll(RegExp(r'\s+'), '_');
           final fileName = '${safeTitle}_${note.id.hashCode.abs()}.json';
-          archive.addFile(
-            ArchiveFile(fileName, bytes.length, bytes),
-          );
+          archive.addFile(ArchiveFile(fileName, bytes.length, bytes));
         }
         final zipBytes = ZipEncoder().encode(archive);
 
@@ -98,9 +100,9 @@ class _BackupScreenState extends State<BackupScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
@@ -122,7 +124,24 @@ class _BackupScreenState extends State<BackupScreen> {
         builder: (context, noteProvider, _) {
           if (noteProvider.notes.isEmpty) {
             return Center(
-              child: Text(t.settings_screen.backup_no_notes),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icon/undraw_question-answered_ezyn.svg',
+                      height: 180,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      t.settings_screen.backup_no_notes,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 90),
+                  ],
+                ),
+              ),
             );
           }
 
@@ -130,8 +149,10 @@ class _BackupScreenState extends State<BackupScreen> {
             children: [
               // Nút chọn tất cả / bỏ chọn tất cả
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
                 child: Row(
                   children: [
                     Text(
@@ -175,14 +196,12 @@ class _BackupScreenState extends State<BackupScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
-                        DateFormat.yMMMd(LocaleSettings.currentLocale.languageCode)
-                            .add_jm()
-                            .format(note.createdAt),
+                        DateFormat.yMMMd(
+                          LocaleSettings.currentLocale.languageCode,
+                        ).add_jm().format(note.createdAt),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
-                            ),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       secondary: const Icon(Icons.note_outlined),
                     );
