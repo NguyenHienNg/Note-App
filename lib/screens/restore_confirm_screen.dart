@@ -53,12 +53,14 @@ class _RestoreScreenState extends State<RestoreScreen> {
   void _handleConfirm() {
     _hasRestoredAny = true;
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
-    noteProvider.addNoteFromBackup(Note(
-      id: _currentNote.id,
-      title: _currentNote.title,
-      content: _currentNote.content,
-      createdAt: _currentNote.createdAt,
-    ));
+    noteProvider.addNoteFromBackup(
+      Note(
+        id: _currentNote.id,
+        title: _currentNote.title,
+        content: _currentNote.content,
+        createdAt: _currentNote.createdAt,
+      ),
+    );
     _moveNext();
   }
 
@@ -71,8 +73,15 @@ class _RestoreScreenState extends State<RestoreScreen> {
     final shouldExit = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        insetPadding: const EdgeInsets.symmetric(
+          horizontal: 32.0,
+          vertical: 24.0,
+        ),
         title: Text(t.settings_screen.restore_cancel_dialog_title),
-        content: Text(t.settings_screen.restore_cancel_dialog_content),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Text(t.settings_screen.restore_cancel_dialog_content),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
@@ -127,8 +136,16 @@ class _RestoreScreenState extends State<RestoreScreen> {
           bottom: widget.notes.length > 1
               ? PreferredSize(
                   preferredSize: const Size.fromHeight(4),
-                  child: LinearProgressIndicator(
-                    value: (_currentIndex + 1) / widget.notes.length,
+                  child: TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    tween: Tween<double>(
+                      begin: 0,
+                      end: (_currentIndex + 1) / widget.notes.length,
+                    ),
+                    builder: (context, value, child) {
+                      return LinearProgressIndicator(value: value);
+                    },
                   ),
                 )
               : null,
@@ -159,9 +176,9 @@ class _RestoreScreenState extends State<RestoreScreen> {
                 const SizedBox(height: 8),
                 // Thời gian
                 Text(
-                  DateFormat.yMMMd(LocaleSettings.currentLocale.languageCode)
-                      .add_jm()
-                      .format(_currentNote.createdAt),
+                  DateFormat.yMMMd(
+                    LocaleSettings.currentLocale.languageCode,
+                  ).add_jm().format(_currentNote.createdAt),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                     fontSize: 13,
